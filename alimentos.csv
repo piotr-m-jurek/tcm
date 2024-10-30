@@ -1,0 +1,269 @@
+id ,el alimento            ,el tipo             ,la temperatura 
+   ,alforfón               ,cereal              ,fresco         
+   ,arroz                  ,cereal              ,neutro         
+   ,arroz dulce            ,cereal              ,templado       
+   ,arroz silvestre        ,cereal              ,fresco         
+   ,avena                  ,cereal              ,templado       
+   ,cebada                 ,cereal              ,fresco         
+   ,centeno                ,cereal              ,neutro         
+   ,germen de trigo        ,cereal              ,frio           
+   ,linaza                 ,cereal              ,neutro         
+   ,lino                   ,cereal              ,neutro         
+   ,maíz                   ,cereal              ,neutro         
+   ,mijo (millo)           ,cereal              ,fresco         
+   ,quínoa                 ,cereal              ,templado       
+   ,sorgo                  ,cereal              ,templado       
+   ,salvado de trigo       ,cereal              ,fresco         
+   ,trigo                  ,cereal              ,fresco         
+   ,aceite de cacahuete    ,aceite y condimento ,neutro         
+   ,aceite de oliva        ,aceite y condimento ,neutro         
+   ,aceite de sésamo       ,aceite y condimento ,fresco         
+   ,aceite de soya         ,aceite y condimento ,templado       
+   ,agar                   ,aceite y condimento ,frio           
+   ,azúcar blanca          ,aceite y condimento ,neutro         
+   ,azúcar de malta        ,aceite y condimento ,templado       
+   ,azúcar moreno          ,aceite y condimento ,templado       
+   ,jarabe de arroz        ,aceite y condimento ,templado       
+   ,kuzu                   ,aceite y condimento ,fresco         
+   ,melaza                 ,aceite y condimento ,templado       
+   ,miel                   ,aceite y condimento ,neutro         
+   ,miso                   ,aceite y condimento ,templado       
+   ,sal                    ,aceite y condimento ,frio           
+   ,salsa de soya          ,aceite y condimento ,fresco         
+   ,vinagre                ,aceite y condimento ,templado       
+   ,fríjol azuki           ,alubio              ,neutro         
+   ,fríjol negro           ,alubio              ,templado       
+   ,fríjol rojo            ,alubio              ,neutro         
+   ,garbanzo               ,alubio              ,neutro         
+   ,guisante               ,alubio              ,neutro         
+   ,haba                   ,alubio              ,neutro         
+   ,judía blanca           ,alubio              ,fresco         
+   ,lenteja                ,alubio              ,neutro         
+   ,soya amarilla          ,alubio              ,fresco         
+   ,soya negra             ,alubio              ,neutro         
+   ,soya verde             ,alubio              ,fresco         
+   ,tofu                   ,alubio              ,fresco         
+   ,anís estrellado        ,bebida              ,templado       
+   ,bebida de saúco        ,bebida              ,fresco         
+   ,café                   ,bebida              ,templado       
+   ,cerveza                ,bebida              ,fresco         
+   ,crisantemo             ,bebida              ,fresco         
+   ,escaramujo             ,bebida              ,neutro         
+   ,flor de lima           ,bebida              ,fresco         
+   ,hoja de frambuesa      ,bebida              ,fresco         
+   ,jazmín                 ,bebida              ,templado       
+   ,leche de soya          ,bebida              ,neutro         
+   ,melisa/torontil        ,bebida              ,fresco         
+   ,menta/poleo            ,bebida              ,fresco         
+   ,manzanilla             ,bebida              ,fresco         
+   ,raiz de diente de lon  ,bebida              ,frio           
+   ,té                     ,bebida              ,fresco         
+   ,vino                   ,bebida              ,templado       
+   ,carne de vaca          ,carne               
+   ,cerdo                  ,carne               
+   ,codorniz               ,carne               
+   ,conejo                 ,carne               
+   ,cordero                ,carne               
+   ,faisán                 ,carne               
+   ,ganso                  ,carne               
+   ,gorrríon               ,carne               
+   ,hígado de cerdo        ,carne               
+   ,hígado de cordero      ,carne               
+   ,hígado de pollo        ,carne               
+   ,hígado de vaca         ,carne               
+   ,jamón                  ,carne               
+   ,oveja                  ,carne               
+   ,paloma                 ,carne               
+   ,pato                   ,carne               
+   ,pavo                   ,carne               
+   ,pollo                  ,carne               
+   ,riñón de cerdo         ,carne               
+   ,riñón de cordero       ,carne               
+   ,riñón de vaca          ,carne               
+   
+   ,aguacate               ,fruta               
+   ,albaricoque            ,fruta               
+   ,arándano               ,fruta               
+   ,arándano azul          ,fruta               
+   ,banana (plátano)       ,fruta               
+   ,caqui                  ,fruta               
+   ,cereza                 ,fruta               
+   ,ciruela                ,fruta               
+   ,coco                   ,fruta               
+   ,dátil                  ,fruta               
+   ,frambuesa              ,fruta               
+   ,frambuesa de longan    ,fruta               
+   ,fresa                  ,fruta               
+   ,granada                ,fruta               
+   ,grosella               ,fruta               
+   ,grosella espinosa      ,fruta               
+   ,higo                   ,fruta               
+   ,lichi                  ,fruta               
+   ,lima                   ,fruta               
+   ,limón                  ,fruta               
+   ,mandarina              ,fruta               
+   ,mango                  ,fruta               
+   ,manzana                ,fruta               
+   ,manzana silvestre      ,fruta               
+   ,melocotón              ,fruta               
+   ,melón                  ,fruta               
+   ,membrillo              ,fruta               
+   ,mora                   ,fruta               
+   ,mora negra             ,fruta               
+   ,naranja                ,fruta               
+   ,papaya                 ,fruta               
+   ,pera                   ,fruta               
+   ,piña                   ,fruta               
+   ,pomelo                 ,fruta               
+   ,ruibardo               ,fruta               
+   ,sandía                 ,fruta               
+   ,uva                    ,fruta               
+   
+   ,ajedrea                ,hierbo y especio    
+   ,ajo                    ,hierbo y especio    
+   ,albahaca               ,hierbo y especio    
+   ,alcaravea              ,hierbo y especio    
+   ,algarroba              ,hierbo y especio    
+   ,anís                   ,hierbo y especio    
+   ,azafrán                ,hierbo y especio    
+   ,canela en roma         ,hierbo y especio    
+   ,cardamomo              ,hierbo y especio    
+   ,corteza de canela      ,hierbo y especio    
+   ,cayena                 ,hierbo y especio    
+   ,chile                  ,hierbo y especio    
+   ,clavo                  ,hierbo y especio    
+   ,comino                 ,hierbo y especio    
+   ,cúrcuma                ,hierbo y especio    
+   ,enebro                 ,hierbo y especio    
+   ,espino                 ,hierbo y especio    
+   ,jengibre fresco        ,hierbo y especio    
+   ,jengibre seco          ,hierbo y especio    
+   ,hoja de cebollino      ,hierbo y especio    
+   ,laurel                 ,hierbo y especio    
+   ,mejorana               ,hierbo y especio    
+   ,menta                  ,hierbo y especio    
+   ,mostaza                ,hierbo y especio    
+   ,nuez moscada           ,hierbo y especio    
+   ,orégano                ,hierbo y especio    
+   ,ortiga                 ,hierbo y especio    
+   ,perejil                ,hierbo y especio    
+   ,pimienta blanca        ,hierbo y especio    
+   ,pimienta negra         ,hierbo y especio    
+   ,rábano picante         ,hierbo y especio    
+   ,regaliz                ,hierbo y especio    
+   ,romero                 ,hierbo y especio    
+   ,salvia                 ,hierbo y especio    
+   ,semilla de cebollino   ,hierbo y especio    
+   ,semilla de cilantro    ,hierbo y especio    
+   ,semilla de eneldo      ,hierbo y especio    
+   ,semilla de fenogreco   ,hierbo y especio    
+   ,semilla de hinojo      ,hierbo y especio    
+   ,tamarindo              ,hierbo y especio    
+   ,tomillo                ,hierbo y especio    
+   
+   ,hoevo de gallina       ,huevos y lacteos    
+   ,huevo gallina blanco   ,huevos y lacteos    
+   ,huevo de pato          ,huevos y lacteos    
+   ,leche de cabra/oveja   ,huevos y lacteos    
+   ,leche de vaca          ,huevos y lacteos    
+   ,mantequilla            ,huevos y lacteos    
+   ,queso                  ,huevos y lacteos    
+   ,yema de huevo          ,huevos y lacteos    
+   ,yogur                  ,huevos y lacteos    
+   
+   ,agua de coco           ,noeces y semillas   
+   ,almendra               ,noeces y semillas   
+   ,avellana               ,noeces y semillas   
+   ,cacahuete              ,noeces y semillas   
+   ,castaña                ,noeces y semillas   
+   ,coco                   ,noeces y semillas   
+   ,nuez de castilla       ,noeces y semillas   
+   ,piñon                  ,noeces y semillas   
+   ,pistacho               ,noeces y semillas   
+   ,seimlla de auyama      ,noeces y semillas   
+   ,semilla de girasol     ,noeces y semillas   
+   ,sésamo blanco          ,noeces y semillas   
+   ,sésamo negro           ,noeces y semillas   
+   
+   ,abulón                 ,pescados y mariscos 
+   ,almeja (fresca)        ,pescados y mariscos 
+   ,almeja (salazón)       ,pescados y mariscos 
+   ,anchoa                 ,pescados y mariscos 
+   ,angula                 ,pescados y mariscos 
+   ,arenque                ,pescados y mariscos 
+   ,caballa                ,pescados y mariscos 
+   ,cangrejo               ,pescados y mariscos 
+   ,carpa                  ,pescados y mariscos 
+   ,esturión               ,pescados y mariscos 
+   ,langosta               ,pescados y mariscos 
+   ,gamba                  ,pescados y mariscos 
+   ,mejillón               ,pescados y mariscos 
+   ,ostra                  ,pescados y mariscos 
+   ,pescado blanco         ,pescados y mariscos 
+   ,pulpo                  ,pescados y mariscos 
+   ,rana (ancas)           ,pescados y mariscos 
+   ,salmón                 ,pescados y mariscos 
+   ,sardina                ,pescados y mariscos 
+   ,sepia                  ,pescados y mariscos 
+   ,tiburón                ,pescados y mariscos 
+   ,trucha                 ,pescados y mariscos 
+   
+   ,algas                  ,suplementos         
+   ,ginseng americano      ,suplementos         
+   ,ginseng chino          ,suplementos         
+   ,ginseng coreano        ,suplementos         
+   ,jalea real             ,suplementos         
+   ,kelp                   ,suplementos         
+   ,polen                  ,suplementos         
+   
+   ,aceituna               ,verduras            
+   ,achicoria              ,verduras            
+   ,alcachofa              ,verduras            
+   ,alcaparra              ,verduras            
+   ,algas marinas          ,verduras            
+   ,alga nori              ,verduras            
+   ,apio                   ,verduras            
+   ,auyama                 ,verduras            
+   ,batata                 ,verduras            
+   ,berenjena              ,verduras            
+   ,berro                  ,verduras            
+   ,brécol                 ,verduras            
+   ,brotes de bambú        ,verduras            
+   ,calabacín              ,verduras            
+   ,calabaza               ,verduras            
+   ,castaña de agua        ,verduras            
+   ,cebolla                ,verduras            
+   ,cebolleta              ,verduras            
+   ,champiñon              ,verduras            
+   ,chirivia               ,verduras            
+   ,colinabo               ,verduras            
+   ,col rizada             ,verduras            
+   ,coliflor               ,verduras            
+   ,escarola               ,verduras            
+   ,espinaca               ,verduras            
+   ,espárrago              ,verduras            
+   ,germinado de alfalfa   ,verduras            
+   ,germinado soya verde   ,verduras            
+   ,hoja de cilantro       ,verduras            
+   ,hoja de diente de león ,verduras            
+   ,hoja de mostaza        ,verduras            
+   ,hongo blanco           ,verduras            
+   ,hongo negro            ,verduras            
+   ,hongo shiitake         ,verduras            
+   ,judía verde            ,verduras            
+   ,kelp                   ,verduras            
+   ,lechuga                ,verduras            
+   ,nabo                   ,verduras            
+   ,ñame                   ,verduras            
+   ,patata                 ,verduras            
+   ,pepino                 ,verduras            
+   ,pimiento               ,verduras            
+   ,plátano grande         ,verduras            
+   ,puerro                 ,verduras            
+   ,rábano                 ,verduras            
+   ,rábano chino           ,verduras            
+   ,remolacha              ,verduras            
+   ,repollo                ,verduras            
+   ,repollo chino          ,verduras            
+   ,tomate                 ,verduras            
+   ,zanahoria              ,verduras            
