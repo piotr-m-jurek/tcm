@@ -1,7 +1,6 @@
-
-id,temperatura, emoji
-1,caliente, 
-2,templado, 🩷
-3,neutro , 🩶
-4,fresco 🩵
-5,frio 💙
+id ,temperatura ,emoji 
+1  ,caliente    ,❤️     
+2  ,templado    ,🩷    
+3  ,neutro      ,🩶    
+4  ,fresco      ,🩵    
+5  ,frio        ,💙    
