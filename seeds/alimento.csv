@@ -1,0 +1,262 @@
+id  ,el alimento            ,el tipo ,la temperatura 
+  1 ,alforfón               ,      1 ,             4 
+  2 ,arroz                  ,      1 ,             3 
+  3 ,arroz dulce            ,      1 ,             2 
+  4 ,arroz silvestre        ,      1 ,             4 
+  5 ,avena                  ,      1 ,             2 
+  6 ,cebada                 ,      1 ,             4 
+  7 ,centeno                ,      1 ,             3 
+  8 ,germen de trigo        ,      1 ,             5 
+  9 ,linaza                 ,      1 ,             3 
+ 10 ,lino                   ,      1 ,             3 
+ 11 ,maíz                   ,      1 ,             3 
+ 12 ,mijo (millo)           ,      1 ,             4 
+ 13 ,quínoa                 ,      1 ,             2 
+ 14 ,sorgo                  ,      1 ,             2 
+ 15 ,salvado de trigo       ,      1 ,             4 
+ 16 ,trigo                  ,      1 ,             4 
+ 17 ,aceite de cacahuete    ,      2 ,             3 
+ 18 ,aceite de oliva        ,      2 ,             3 
+ 19 ,aceite de sésamo       ,      2 ,             4 
+ 20 ,aceite de soya         ,      2 ,             2 
+ 21 ,agar                   ,      2 ,             5 
+ 22 ,azúcar blanca          ,      2 ,             3 
+ 23 ,azúcar de malta        ,      2 ,             2 
+ 24 ,azúcar moreno          ,      2 ,             2 
+ 25 ,jarabe de arroz        ,      2 ,             2 
+ 26 ,kuzu                   ,      2 ,             4 
+ 27 ,melaza                 ,      2 ,             2 
+ 28 ,miel                   ,      2 ,             3 
+ 29 ,miso                   ,      2 ,             2 
+ 30 ,sal                    ,      2 ,             5 
+ 31 ,salsa de soya          ,      2 ,             4 
+ 32 ,vinagre                ,      2 ,             2 
+ 33 ,fríjol azuki           ,      3 ,             3 
+ 34 ,fríjol negro           ,      3 ,             2 
+ 35 ,fríjol rojo            ,      3 ,             3 
+ 36 ,garbanzo               ,      3 ,             3 
+ 37 ,guisante               ,      3 ,             3 
+ 38 ,haba                   ,      3 ,             3 
+ 39 ,judía blanca           ,      3 ,             4 
+ 40 ,lenteja                ,      3 ,             3 
+ 41 ,soya amarilla          ,      3 ,             4 
+ 42 ,soya negra             ,      3 ,             3 
+ 43 ,soya verde             ,      3 ,             4 
+ 44 ,tofu                   ,      3 ,             4 
+ 45 ,anís estrellado        ,      4 ,             2 
+ 46 ,bebida de saúco        ,      4 ,             4 
+ 47 ,café                   ,      4 ,             2 
+ 48 ,cerveza                ,      4 ,             4 
+ 49 ,crisantemo             ,      4 ,             4 
+ 50 ,escaramujo             ,      4 ,             3 
+ 51 ,flor de lima           ,      4 ,             4 
+ 52 ,hoja de frambuesa      ,      4 ,             4 
+ 53 ,jazmín                 ,      4 ,             2 
+ 54 ,leche de soya          ,      4 ,             3 
+ 55 ,melisa/torontil        ,      4 ,             4 
+ 56 ,menta/poleo            ,      4 ,             4 
+ 57 ,manzanilla             ,      4 ,             4 
+ 58 ,raiz de diente de lon  ,      4 ,             5 
+ 59 ,té                     ,      4 ,             4 
+ 60 ,vino                   ,      4 ,             2 
+ 61 ,carne de vaca          ,      5 ,             3 
+ 62 ,cerdo                  ,      5 ,             3 
+ 63 ,codorniz               ,      5 ,             3 
+ 64 ,conejo                 ,      5 ,             4 
+ 65 ,cordero                ,      5 ,             1 
+ 66 ,faisán                 ,      5 ,             2 
+ 67 ,ganso                  ,      5 ,             3 
+ 68 ,gorrríon               ,      5 ,             2 
+ 69 ,hígado de cerdo        ,      5 ,             2 
+ 70 ,hígado de cordero      ,      5 ,             4 
+ 71 ,hígado de pollo        ,      5 ,             2 
+ 72 ,hígado de vaca         ,      5 ,             3 
+ 73 ,jamón                  ,      5 ,             2 
+ 74 ,oveja                  ,      5 ,             2 
+ 75 ,paloma                 ,      5 ,             3 
+ 76 ,pato                   ,      5 ,             3 
+ 77 ,pavo                   ,      5 ,             2 
+ 78 ,pollo                  ,      5 ,             2 
+ 79 ,riñón de cerdo         ,      5 ,             3 
+ 80 ,riñón de cordero       ,      5 ,             2 
+ 81 ,riñón de vaca          ,      5 ,             2 
+ 82 ,aguacate               ,      6 ,             4 
+ 83 ,albaricoque            ,      6 ,             3 
+ 84 ,arándano               ,      6 ,             5 
+ 85 ,arándano azul          ,      6 ,             4 
+ 86 ,banana (plátano)       ,      6 ,             5 
+ 87 ,caqui                  ,      6 ,             5 
+ 88 ,cereza                 ,      6 ,             2 
+ 89 ,ciruela                ,      6 ,             3 
+ 90 ,coco                   ,      6 ,             3 
+ 91 ,dátil                  ,      6 ,             2 
+ 92 ,frambuesa              ,      6 ,             3 
+ 93 ,frambuesa de longan    ,      6 ,             2 
+ 94 ,fresa                  ,      6 ,             4 
+ 95 ,granada                ,      6 ,             3 
+ 96 ,grosella               ,      6 ,             4 
+ 97 ,grosella espinosa      ,      6 ,             5 
+ 98 ,higo                   ,      6 ,             3 
+ 99 ,lichi                  ,      6 ,             2 
+100 ,lima                   ,      6 ,             5 
+101 ,limón                  ,      6 ,             5 
+102 ,mandarina              ,      6 ,             4 
+103 ,mango                  ,      6 ,             5 
+104 ,manzana                ,      6 ,             4 
+105 ,manzana silvestre      ,      6 ,             3 
+106 ,melocotón              ,      6 ,             2 
+107 ,melón                  ,      6 ,             5 
+108 ,membrillo              ,      6 ,             2 
+109 ,mora                   ,      6 ,             5 
+110 ,mora negra             ,      6 ,             2 
+111 ,naranja                ,      6 ,             4 
+112 ,papaya                 ,      6 ,             3 
+113 ,pera                   ,      6 ,             4 
+114 ,piña                   ,      6 ,             3 
+115 ,pomelo                 ,      6 ,             5 
+116 ,ruibardo               ,      6 ,             5 
+117 ,sandía                 ,      6 ,             5 
+118 ,uva                    ,      6 ,             3 
+119 ,ajedrea                ,      7 ,             2 
+120 ,ajo                    ,      7 ,             1 
+121 ,albahaca               ,      7 ,             2 
+122 ,alcaravea              ,      7 ,             2 
+123 ,algarroba              ,      7 ,             2 
+124 ,anís                   ,      7 ,             2 
+125 ,azafrán                ,      7 ,             3 
+126 ,canela en roma         ,      7 ,             2 
+127 ,cardamomo              ,      7 ,             2 
+128 ,corteza de canela      ,      7 ,             1 
+129 ,cayena                 ,      7 ,             1 
+130 ,chile                  ,      7 ,             1 
+131 ,clavo                  ,      7 ,             2 
+132 ,comino                 ,      7 ,             2 
+133 ,cúrcuma                ,      7 ,             2 
+134 ,enebro                 ,      7 ,             2 
+135 ,espino                 ,      7 ,             2 
+136 ,jengibre 4             ,      7 ,             2 
+137 ,jengibre seco          ,      7 ,             1 
+138 ,hoja de cebollino      ,      7 ,             2 
+139 ,laurel                 ,      7 ,             2 
+140 ,mejorana               ,      7 ,             4 
+141 ,menta                  ,      7 ,             4 
+142 ,mostaza                ,      7 ,             1 
+143 ,nuez moscada           ,      7 ,             2 
+144 ,orégano                ,      7 ,             2 
+145 ,ortiga                 ,      7 ,             4 
+146 ,perejil                ,      7 ,             2 
+147 ,pimienta blanca        ,      7 ,             1 
+148 ,pimienta negra         ,      7 ,             1 
+149 ,rábano picante         ,      7 ,             1 
+150 ,regaliz                ,      7 ,             3 
+151 ,romero                 ,      7 ,             2 
+152 ,salvia                 ,      7 ,             2 
+153 ,semilla de cebollino   ,      7 ,             2 
+154 ,semilla de cilantro    ,      7 ,             3 
+155 ,semilla de eneldo      ,      7 ,             2 
+156 ,semilla de fenogreco   ,      7 ,             2 
+157 ,semilla de hinojo      ,      7 ,             2 
+158 ,tamarindo              ,      7 ,             4 
+159 ,tomillo                ,      7 ,             2 
+160 ,hoevo de gallina       ,      8 ,             3 
+161 ,huevo gallina blanco   ,      8 ,             3 
+162 ,huevo de pato          ,      8 ,             4 
+163 ,leche de cabra/oveja   ,      8 ,             2 
+164 ,leche de vaca          ,      8 ,             3 
+165 ,mantequilla            ,      8 ,             2 
+166 ,queso                  ,      8 ,             3 
+167 ,yema de huevo          ,      8 ,             3 
+168 ,yogur                  ,      8 ,             3 
+169 ,agua de coco           ,      9 ,             2 
+170 ,almendra               ,      9 ,             3 
+171 ,avellana               ,      9 ,             3 
+172 ,cacahuete              ,      9 ,             3 
+173 ,castaña                ,      9 ,             2 
+174 ,coco                   ,      9 ,             2 
+175 ,nuez de castilla       ,      9 ,             2 
+176 ,piñon                  ,      9 ,             2 
+177 ,pistacho               ,      9 ,             3 
+178 ,seimlla de auyama      ,      9 ,             3 
+179 ,semilla de girasol     ,      9 ,             3 
+180 ,sésamo blanco          ,      9 ,             3 
+181 ,sésamo negro           ,      9 ,             3 
+182 ,abulón                 ,     10 ,             3 
+183 ,almeja (fresca)        ,     10 ,             5 
+184 ,almeja (salazón)       ,     10 ,             5 
+185 ,anchoa                 ,     10 ,             2 
+186 ,angula                 ,     10 ,             2 
+187 ,arenque                ,     10 ,             3 
+188 ,caballa                ,     10 ,             3 
+189 ,cangrejo               ,     10 ,             5 
+190 ,carpa                  ,     10 ,             3 
+191 ,esturión               ,     10 ,             3 
+192 ,langosta               ,     10 ,             2 
+193 ,gamba                  ,     10 ,             2 
+194 ,mejillón               ,     10 ,             2 
+195 ,ostra                  ,     10 ,             3 
+196 ,pescado blanco         ,     10 ,             3 
+197 ,pulpo                  ,     10 ,             5 
+198 ,rana (ancas)           ,     10 ,             4 
+199 ,salmón                 ,     10 ,             3 
+200 ,sardina                ,     10 ,             3 
+201 ,sepia                  ,     10 ,             3 
+202 ,tiburón                ,     10 ,             3 
+203 ,trucha                 ,     10 ,             1 
+204 ,algas                  ,     11 ,             3 
+205 ,ginseng americano      ,     11 ,             3 
+206 ,ginseng chino          ,     11 ,             2 
+207 ,ginseng coreano        ,     11 ,             1 
+208 ,jalea real             ,     11 ,             3 
+209 ,kelp                   ,     11 ,             5 
+210 ,polen                  ,     11 ,             3 
+212 ,aceituna               ,     12 ,             3 
+213 ,achicoria              ,     12 ,             4 
+214 ,alcachofa              ,     12 ,             4 
+215 ,alcaparra              ,     12 ,             2 
+216 ,algas marinas          ,     12 ,             5 
+217 ,alga nori              ,     12 ,             5 
+218 ,apio                   ,     12 ,             4 
+219 ,auyama                 ,     12 ,             3 
+220 ,batata                 ,     12 ,             2 
+221 ,berenjena              ,     12 ,             4 
+222 ,berro                  ,     12 ,             2 
+223 ,brécol                 ,     12 ,             4 
+224 ,brotes de bambú        ,     12 ,             5 
+225 ,calabacín              ,     12 ,             4 
+226 ,calabaza               ,     12 ,             4 
+227 ,castaña de agua        ,     12 ,             5 
+228 ,cebolla                ,     12 ,             2 
+229 ,cebolleta              ,     12 ,             2 
+230 ,champiñon              ,     12 ,             4 
+231 ,chirivia               ,     12 ,             2 
+232 ,colinabo               ,     12 ,             3 
+233 ,col rizada             ,     12 ,             2 
+234 ,coliflor               ,     12 ,             4 
+235 ,escarola               ,     12 ,             4 
+236 ,espinaca               ,     12 ,             4 
+237 ,espárrago              ,     12 ,             5 
+238 ,germinado de alfalfa   ,     12 ,             3 
+239 ,germinado soya verde   ,     12 ,             5 
+240 ,hoja de cilantro       ,     12 ,             2 
+241 ,hoja de diente de león ,     12 ,             5 
+242 ,hoja de mostaza        ,     12 ,             2 
+243 ,hongo blanco           ,     12 ,             3 
+244 ,hongo negro            ,     12 ,             3 
+245 ,hongo shiitake         ,     12 ,             3 
+246 ,judía verde            ,     12 ,             3 
+247 ,kelp                   ,     12 ,             4 
+248 ,lechuga                ,     12 ,             4 
+249 ,nabo                   ,     12 ,             3 
+250 ,ñame                   ,     12 ,             3 
+251 ,patata                 ,     12 ,             3 
+252 ,pepino                 ,     12 ,             4 
+253 ,pimiento               ,     12 ,             2 
+254 ,plátano grande         ,     12 ,             5 
+255 ,puerro                 ,     12 ,             2 
+256 ,rábano                 ,     12 ,             4 
+257 ,rábano chino           ,     12 ,             4 
+258 ,remolacha              ,     12 ,             3 
+259 ,repollo                ,     12 ,             3 
+260 ,repollo chino          ,     12 ,             3 
+261 ,tomate                 ,     12 ,             5 
+262 ,zanahoria              ,     12 ,             3 
