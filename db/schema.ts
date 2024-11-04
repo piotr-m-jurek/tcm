@@ -25,14 +25,32 @@ export const action = sqliteTable('action', {
   name: text().unique().notNull(),
 });
 
+export const foodActions = sqliteTable('food-actions', {
+  id: int().primaryKey({ autoIncrement: true }),
+  foodId: integer('food_id').references(() => foodList.id),
+  actionId: integer('action_id').references(() => action.id),
+});
+
 export const route = sqliteTable('route', {
   id: int().primaryKey({ autoIncrement: true }),
   name: text().unique().notNull(),
   shortName: text('short_name').unique().notNull(),
 });
 
+export const foodRoutes = sqliteTable('food-routes', {
+  id: int().primaryKey({ autoIncrement: true }),
+  foodId: integer('food_id').references(() => foodList.id),
+  routeId: integer('route_id').references(() => route.id),
+});
+
 export const flavor = sqliteTable('flavor', {
   id: int().primaryKey({ autoIncrement: true }),
   name: text().unique().notNull(),
   symbol: text().unique(),
+});
+
+export const foodFlavors = sqliteTable('food-flavors', {
+  id: int().primaryKey({ autoIncrement: true }),
+  foodId: integer('food_id').references(() => foodList.id),
+  flavorId: integer('flavor_id').references(() => flavor.id),
 });

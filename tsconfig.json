@@ -4,7 +4,7 @@
     "types": ["bun-types"],
 
     // enable latest features
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "module": "esnext",
     "target": "esnext",
 
@@ -13,9 +13,10 @@
     "allowImportingTsExtensions": true,
     "moduleDetection": "force",
 
-    "jsx": "react-jsx", // support JSX
-    "allowJs": true, // allow importing `.js` from `.ts`
-    "esModuleInterop": true, // allow default imports for CommonJS modules
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
+    "allowJs": true,
+    "esModuleInterop": true,
 
     // best practices
     "strict": true,
