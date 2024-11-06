@@ -7,6 +7,8 @@ import { drizzle } from 'drizzle-orm/bun-sqlite';
 const sqlite = new Database(process.env.DB_FILE_NAME);
 const db = drizzle(sqlite);
 
+const trimRowValues = (row: string[]) => row.map((v) => v.trim());
+
 /**
  * @throws number parsing error
  */
@@ -26,7 +28,7 @@ async function prepareCSV<Type>(
   const rawRoutes = await Bun.file(filename).text();
   const [, ...data] = parse(rawRoutes);
 
-  return data.map(cb);
+  return data.map(trimRowValues).map(cb);
 }
 
 await db.insert(schema.action).values(
