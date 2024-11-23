@@ -1,5 +1,19 @@
 # tcm
 
+## TODO: 
+- [ ] admin path for admin view
+- [ ] Makefile with scripts for: purge db and migrations, setup fresh db with all the data
+- [ ] custom dropdown component with internal checkbox state and css (fallback to js)
+- [ ] prepare data with relation many-to-one
+- [ ] (v2) offline access
+- [ ] (v2) authentication 
+
+## In progress: 
+
+## Done
+- [x] connect db with drizzle
+- [x] prepare initial seeds
+
 To install dependencies:
 
 ```bash

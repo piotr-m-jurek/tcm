@@ -13,7 +13,7 @@ export function Layout({ children }: { children: Child }) {
           crossorigin="anonymous"
         />
       </head>
-      <body class="flex size-full bg-stone-700 text-gray-200">{children}</body>
+      <body class="flex size-full">{children}</body>
     </html>
   );
 }
