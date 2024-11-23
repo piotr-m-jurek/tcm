@@ -8,7 +8,7 @@ import { routeConstants } from './shared';
 function RenderFlavors({ flavors, name }: { flavors: Flavor[]; name: string }) {
   return (
     <Select name={name}>
-      {flavors.slice(1).map((flavor) => (
+      {flavors.map((flavor) => (
         <Option
           name={name}
           value={flavor.id}

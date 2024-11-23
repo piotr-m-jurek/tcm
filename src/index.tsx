@@ -27,7 +27,7 @@ app.get('/admin', async (c) => {
   const flavors = await db.select().from(schema.flavor);
   const actions = await db.select().from(schema.action);
 
-  console.log(items);
+  console.log({ flavors });
   return c.html(
     <AdminView
       routes={routes}

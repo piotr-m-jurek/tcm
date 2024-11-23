@@ -14,7 +14,7 @@ export function Select({
       multiple
       name={name}
       class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm h-contain"
-      size={Children.count(children)}
+      size={Children.count(Array.isArray(children) ? children : [children])}
     >
       {children}
     </select>
