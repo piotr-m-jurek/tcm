@@ -115,18 +115,19 @@ export function AdminView({
   flavors,
   routes,
 }: {
-  items: { food: Food }[];
+  items: Item[];
   actions: Action[];
   flavors: Flavor[];
   routes: Route[];
 }) {
+  console.log(items);
   return (
     <Layout>
       <div class="flex flex-col w-full">
         <h1 class="text-4xl">Assign route</h1>
         {items.map((item) => (
           <RenderItem
-            food={item.food}
+            item={item}
             actions={actions}
             flavors={flavors}
             routes={routes}

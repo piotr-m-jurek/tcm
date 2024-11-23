@@ -10,27 +10,29 @@ const db = drizzle(sqlite);
 
 const app = new Hono();
 
-export type AdminItems = typeof items;
-export const items = await db
-  .select()
-  .from(schema.foodList)
-  .leftJoin(
-    schema.temperature,
-    eq(schema.foodList.temperature, schema.temperature.id)
-  )
-  .leftJoin(schema.type, eq(schema.foodList.type, schema.type.id))
-  .leftJoin(
-    schema.foodRoutes,
-    eq(schema.foodList.id, schema.foodRoutes.foodId)
-  );
+export type AdminItems = Awaited<ReturnType<typeof getItems>>;
+const getItems = async () => {
+  return await db
+    .select()
+    .from(schema.foodList)
+    .leftJoin(
+      schema.temperature,
+      eq(schema.foodList.temperature, schema.temperature.id)
+    )
+    .leftJoin(schema.type, eq(schema.foodList.type, schema.type.id))
+    .leftJoin(
+      schema.foodRoutes,
+      eq(schema.foodList.id, schema.foodRoutes.foodId)
+    );
+};
 
 app.get('/admin', async (c) => {
   const routes = await db.select().from(schema.route);
   const flavors = await db.select().from(schema.flavor);
   const actions = await db.select().from(schema.action);
+  const items = await getItems();
 
-  console.log(items.at(1));
-  console.log({ flavors });
+  console.log(items);
   return c.html(
     <AdminView
       routes={routes}
