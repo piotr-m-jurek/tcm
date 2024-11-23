@@ -4,6 +4,7 @@ import { Select, Option } from './components/Select';
 import { Button } from './components/Button';
 
 import { routeConstants } from './shared';
+import { AdminItems } from '.';
 
 function RenderFlavors({ flavors, name }: { flavors: Flavor[]; name: string }) {
   return (
@@ -18,7 +19,15 @@ function RenderFlavors({ flavors, name }: { flavors: Flavor[]; name: string }) {
   );
 }
 
-function RenderRoutes({ routes, name }: { routes: Route[]; name: string }) {
+function RenderRoutes({
+  routes,
+  name,
+  selected,
+}: {
+  routes: Route[];
+  name: string;
+  selected: string[];
+}) {
   return (
     <Select name={name}>
       {routes.map((route) => (
@@ -42,34 +51,38 @@ function RenderActions({ actions, name }: { actions: Action[]; name: string }) {
     </Select>
   );
 }
-type Item = typeof schema.foodList.$inferSelect;
+
+type Item = AdminItems[number];
+type Food = Item['food'];
+
 type Action = typeof schema.action.$inferSelect;
 type Flavor = typeof schema.flavor.$inferSelect;
 type Route = typeof schema.route.$inferSelect;
 
 function RenderItem({
-  food,
+  item,
   routes,
   flavors,
   actions,
 }: {
-  food: Item;
+  item: Item;
   routes: Route[];
   flavors: Flavor[];
   actions: Action[];
 }) {
   return (
     <>
-      <h1 class="text-2xl text-center">{food.name}</h1>
+      <h1 class="text-2xl text-center">{item.food.name}</h1>
       <form
         class="flex flex-col gap-2 border p-2 w-full max-w-[765px]"
-        hx-post={`/api/item/${food.id}`}
+        hx-post={`/api/item/${item.food.id}`}
       >
         <div class="flex gap-2 justify-between">
           <div class="flex flex-col gap border">
             <h1 class="text-2xl text-bold">Routes</h1>
             <RenderRoutes
               name={routeConstants.root.itemFormData.routes}
+              selected={[]}
               routes={routes}
             />
           </div>
@@ -102,7 +115,7 @@ export function AdminView({
   flavors,
   routes,
 }: {
-  items: { food: Item }[];
+  items: { food: Food }[];
   actions: Action[];
   flavors: Flavor[];
   routes: Route[];
