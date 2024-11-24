@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { renderAdminView, updateItem } from './admin';
-import { userView } from './user';
+import { userView } from './views/user';
 
 const app = new Hono();
 

@@ -1,10 +1,8 @@
-import { Layout } from '../layout';
-import { Select, Option } from '../components/Select';
-import { Button } from '../components/Button';
-
-import { routeConstants } from '../shared';
-import type { RawAction, RawFlavor, RawRoute } from '../queries';
-import { AggregatedItem } from '../mappers';
+import { Button } from '../../components/Button';
+import { Select, Option } from '../../components/Select';
+import { AggregatedItem } from '../../db/mappers';
+import { RawFlavor, RawRoute, RawAction } from '../../db/queries';
+import { routeConstants } from '../../shared';
 
 type RenderCollection<Col> = {
   collection: Col[];
@@ -127,33 +125,5 @@ export function RenderItem({
         </Button>
       </form>
     </div>
-  );
-}
-
-export function AdminView({
-  items,
-  actions,
-  flavors,
-  routes,
-}: {
-  items: AggregatedItem[];
-  actions: RawAction[];
-  flavors: RawFlavor[];
-  routes: RawRoute[];
-}) {
-  return (
-    <Layout>
-      <div class="flex flex-col">
-        <h1 class="text-4xl">Assign route</h1>
-        {items.map((item) => (
-          <RenderItem
-            item={item}
-            actions={actions}
-            flavors={flavors}
-            routes={routes}
-          />
-        ))}
-      </div>
-    </Layout>
   );
 }

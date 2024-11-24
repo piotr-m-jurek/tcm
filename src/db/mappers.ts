@@ -1,4 +1,4 @@
-import type { RawItem } from './queries';
+import type { RawItem } from './db/queries';
 
 export type AggregatedItem = {
   food: RawItem['food'];

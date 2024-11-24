@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
-import * as schema from '../db/schema';
-import { db } from './db';
+import * as schema from '../../db/schema';
+import { db } from '.';
 
 export type RawRoute = Awaited<ReturnType<typeof getRawRoutes>>[number];
 export const getRawRoutes = async () => await db.select().from(schema.route);

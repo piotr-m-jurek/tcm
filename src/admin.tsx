@@ -1,14 +1,13 @@
-import { aggregateItems } from './mappers';
-import { getItem, RawItem } from './queries';
+import { aggregateItems } from './db/mappers';
+import { getItem, RawItem } from './db/queries';
 import { Context } from 'hono';
 
-import { getItems } from './queries';
-import { getRawActions, getRawFlavors, getRawRoutes } from './queries';
-import { rewriteActions } from './writes';
-import { rewriteFlavors } from './writes';
+import { getItems } from './db/queries';
+import { getRawActions, getRawFlavors, getRawRoutes } from './db/queries';
+import { rewriteActions, rewriteFlavors, rewriteRoutes } from './db/writes';
+import { AdminView } from './views/admin';
+import { RenderItem } from './views/admin/RenderItem';
 import { routeConstants } from './shared';
-import { rewriteRoutes } from './writes';
-import { AdminView, RenderItem } from './views/admin';
 
 export async function renderAdminView(c: Context) {
   const rawRoutes = await getRawRoutes();
