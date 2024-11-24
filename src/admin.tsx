@@ -1,18 +1,29 @@
 import { Layout } from './layout';
-import * as schema from '../db/schema';
 import { Select, Option } from './components/Select';
 import { Button } from './components/Button';
 
 import { routeConstants } from './shared';
-import { AdminItems } from '.';
+import type { RawAction, RawFlavor, RawRoute } from './queries';
+import { AggregatedItem } from './mappers';
 
-function RenderFlavors({ flavors, name }: { flavors: Flavor[]; name: string }) {
+type RenderCollection<Col> = {
+  collection: Col[];
+  name: string;
+  selected: number[];
+};
+
+function RenderFlavors({
+  collection,
+  name,
+  selected,
+}: RenderCollection<RawFlavor>) {
   return (
     <Select name={name}>
-      {flavors.map((flavor) => (
+      {collection.map((flavor) => (
         <Option
           name={name}
-          value={flavor.id}
+          value={flavor.id.toString()}
+          selected={selected.includes(flavor.id)}
         >{`(${flavor.symbol}) ${flavor.name}`}</Option>
       ))}
     </Select>
@@ -20,31 +31,36 @@ function RenderFlavors({ flavors, name }: { flavors: Flavor[]; name: string }) {
 }
 
 function RenderRoutes({
-  routes,
+  collection,
   name,
   selected,
-}: {
-  routes: Route[];
-  name: string;
-  selected: string[];
-}) {
+}: RenderCollection<RawRoute>) {
   return (
     <Select name={name}>
-      {routes.map((route) => (
+      {collection.map((route) => (
         <Option
           name={name}
-          value={route.id}
+          value={route.id.toString()}
+          selected={selected.includes(route.id)}
         >{`${route.shortName}(${route.name})`}</Option>
       ))}
     </Select>
   );
 }
 
-function RenderActions({ actions, name }: { actions: Action[]; name: string }) {
+function RenderActions({
+  collection,
+  name,
+  selected,
+}: RenderCollection<RawAction>) {
   return (
     <Select name={name}>
-      {actions.map((action) => (
-        <Option name={name} value={action.id}>
+      {collection.map((action) => (
+        <Option
+          name={name}
+          value={action.id.toString()}
+          selected={selected.includes(action.id)}
+        >
           {action.name}
         </Option>
       ))}
@@ -52,52 +68,49 @@ function RenderActions({ actions, name }: { actions: Action[]; name: string }) {
   );
 }
 
-type Item = AdminItems[number];
-type Food = Item['food'];
-
-type Action = typeof schema.action.$inferSelect;
-type Flavor = typeof schema.flavor.$inferSelect;
-type Route = typeof schema.route.$inferSelect;
-
-function RenderItem({
+export function RenderItem({
   item,
   routes,
   flavors,
   actions,
 }: {
-  item: Item;
-  routes: Route[];
-  flavors: Flavor[];
-  actions: Action[];
+  item: AggregatedItem;
+  routes: RawRoute[];
+  flavors: RawFlavor[];
+  actions: RawAction[];
 }) {
   return (
-    <>
+    <div>
       <h1 class="text-2xl text-center">{item.food.name}</h1>
       <form
-        class="flex flex-col gap-2 border p-2 w-full max-w-[765px]"
+        class="flex flex-col gap-2 p-2 w-full max-w-[765px]"
         hx-post={`/api/item/${item.food.id}`}
+        hx-target="closest div"
+        hx-swap="outerHTML"
       >
         <div class="flex gap-2 justify-between">
-          <div class="flex flex-col gap border">
+          <div class="flex flex-col gap w-full">
             <h1 class="text-2xl text-bold">Routes</h1>
             <RenderRoutes
               name={routeConstants.root.itemFormData.routes}
-              selected={[]}
-              routes={routes}
+              selected={item.routes}
+              collection={routes}
             />
           </div>
-          <div class="flex flex-col gap border h-full">
+          <div class="flex flex-col gap w-full">
             <h1 class="text-2xl text-bold">Flavors</h1>
             <RenderFlavors
               name={routeConstants.root.itemFormData.flavors}
-              flavors={flavors}
+              collection={flavors}
+              selected={item.flavors}
             />
           </div>
-          <div class="flex flex-col gap border">
+          <div class="flex flex-col gap w-full">
             <h1 class="text-2xl text-bold">Actions</h1>
             <RenderActions
               name={routeConstants.root.itemFormData.actions}
-              actions={actions}
+              collection={actions}
+              selected={item.actions}
             />
           </div>
         </div>
@@ -106,24 +119,24 @@ function RenderItem({
           <p class="htmx-indicator">loading</p>
         </Button>
       </form>
-    </>
+    </div>
   );
 }
+
 export function AdminView({
   items,
   actions,
   flavors,
   routes,
 }: {
-  items: Item[];
-  actions: Action[];
-  flavors: Flavor[];
-  routes: Route[];
+  items: AggregatedItem[];
+  actions: RawAction[];
+  flavors: RawFlavor[];
+  routes: RawRoute[];
 }) {
-  console.log(items);
   return (
     <Layout>
-      <div class="flex flex-col w-full">
+      <div class="flex flex-col">
         <h1 class="text-4xl">Assign route</h1>
         {items.map((item) => (
           <RenderItem

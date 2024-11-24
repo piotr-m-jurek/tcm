@@ -24,13 +24,15 @@ export function Option({
   children,
   value,
   name,
+  selected,
 }: {
   children: TypeChildren;
   value: JSX.IntrinsicElements['option']['value'];
   name: JSX.IntrinsicElements['option']['name'];
+  selected: JSX.IntrinsicElements['option']['selected'];
 }) {
   return (
-    <option name={name} class="p-1" value={value}>
+    <option name={name} class="p-1" value={value} selected={selected}>
       {children}
     </option>
   );
