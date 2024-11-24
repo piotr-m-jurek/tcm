@@ -97,7 +97,7 @@ export function RenderItem({
           <div class="flex flex-col gap w-full">
             <h1 class="text-2xl text-bold">Routes</h1>
             <RenderRoutes
-              name={routeConstants.root.itemFormData.routes}
+              name={routeConstants.admin.routes}
               selected={item.routes}
               collection={routes}
             />
@@ -105,7 +105,7 @@ export function RenderItem({
           <div class="flex flex-col gap w-full">
             <h1 class="text-2xl text-bold">Flavors</h1>
             <RenderFlavors
-              name={routeConstants.root.itemFormData.flavors}
+              name={routeConstants.admin.flavors}
               collection={flavors}
               selected={item.flavors}
             />
@@ -113,7 +113,7 @@ export function RenderItem({
           <div class="flex flex-col gap w-full">
             <h1 class="text-2xl text-bold">Actions</h1>
             <RenderActions
-              name={routeConstants.root.itemFormData.actions}
+              name={routeConstants.admin.actions}
               collection={actions}
               selected={item.actions}
             />

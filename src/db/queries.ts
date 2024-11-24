@@ -8,10 +8,20 @@ export const getRawRoutes = async () => await db.select().from(schema.route);
 export type RawFlavor = Awaited<ReturnType<typeof getRawFlavors>>[number];
 export const getRawFlavors = async () => await db.select().from(schema.flavor);
 
+export type RawType = Awaited<ReturnType<typeof getRawTypes>>[number];
+export const getRawTypes = async () => await db.select().from(schema.type);
+
+export type RawTemperature = Awaited<
+  ReturnType<typeof getRawTemperatures>
+>[number];
+export const getRawTemperatures = async () =>
+  await db.select().from(schema.temperature);
+
 export type RawAction = Awaited<ReturnType<typeof getRawActions>>[number];
 export const getRawActions = async () => await db.select().from(schema.action);
 
 export type RawItem = Awaited<ReturnType<typeof getItem>>[number];
+
 export const getItem = (id: number) =>
   db
     .select()

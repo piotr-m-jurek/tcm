@@ -1,4 +1,4 @@
-import { aggregateItems } from './db/mappers';
+import { aggregateAdminItems } from './db/mappers';
 import { getItem, RawItem } from './db/queries';
 import { Context } from 'hono';
 
@@ -15,7 +15,7 @@ export async function renderAdminView(c: Context) {
   const rawActions = await getRawActions();
   const items: RawItem[] = await getItems();
 
-  const aggregated = aggregateItems(items);
+  const aggregated = aggregateAdminItems(items);
 
   return c.html(
     <AdminView
@@ -30,9 +30,9 @@ export async function renderAdminView(c: Context) {
 export async function updateItem(c: Context) {
   const id = c.req.param('itemId');
   const formData = await c.req.formData();
-  const routeIds = formData.getAll(routeConstants.root.itemFormData.routes);
-  const flavorIds = formData.getAll(routeConstants.root.itemFormData.flavors);
-  const actionIds = formData.getAll(routeConstants.root.itemFormData.actions);
+  const routeIds = formData.getAll(routeConstants.admin.routes);
+  const flavorIds = formData.getAll(routeConstants.admin.flavors);
+  const actionIds = formData.getAll(routeConstants.admin.actions);
 
   await rewriteRoutes(+id, routeIds);
   await rewriteFlavors(+id, flavorIds);
@@ -40,7 +40,7 @@ export async function updateItem(c: Context) {
 
   const item = await getItem(+id);
 
-  const aggregated = aggregateItems(item);
+  const aggregated = aggregateAdminItems(item);
   const rawActions = await getRawActions();
   const rawFlavors = await getRawFlavors();
   const rawRoutes = await getRawRoutes();
