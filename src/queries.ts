@@ -1,9 +1,6 @@
-import { Database } from 'bun:sqlite';
 import { eq } from 'drizzle-orm';
-import { drizzle } from 'drizzle-orm/bun-sqlite';
 import * as schema from '../db/schema';
-const sqlite = new Database(process.env.DB_FILE_NAME);
-export const db = drizzle<typeof schema>(sqlite);
+import { db } from './db';
 
 export type RawRoute = Awaited<ReturnType<typeof getRawRoutes>>[number];
 export const getRawRoutes = async () => await db.select().from(schema.route);

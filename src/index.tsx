@@ -1,10 +1,8 @@
-import * as schema from '../db/schema';
 import { AdminView, RenderItem } from './admin';
 import { routeConstants } from './shared';
 
 import { Hono } from 'hono';
 import {
-  db,
   getItem,
   getItems,
   getRawActions,
@@ -12,8 +10,8 @@ import {
   getRawRoutes,
   RawItem,
 } from './queries';
-import { eq } from 'drizzle-orm';
 import { aggregateItems } from './mappers';
+import { rewriteRoutes, rewriteFlavors, rewriteActions } from './writes';
 
 const app = new Hono();
 
@@ -42,20 +40,9 @@ app.post('/api/item/:itemId', async (c) => {
   const flavorIds = formData.getAll(routeConstants.root.itemFormData.flavors);
   const actionIds = formData.getAll(routeConstants.root.itemFormData.actions);
 
-  await db.delete(schema.foodRoutes).where(eq(schema.foodRoutes.foodId, +id));
-  await db
-    .insert(schema.foodRoutes)
-    .values(routeIds.map(createRelationIdObject(id, 'routeId')));
-
-  await db.delete(schema.foodFlavors).where(eq(schema.foodFlavors.foodId, +id));
-  await db
-    .insert(schema.foodFlavors)
-    .values(flavorIds.map(createRelationIdObject(id, 'flavorId')));
-
-  await db.delete(schema.foodActions).where(eq(schema.foodActions.foodId, +id));
-  await db
-    .insert(schema.foodActions)
-    .values(actionIds.map(createRelationIdObject(id, 'actionId')));
+  await rewriteRoutes(+id, routeIds);
+  await rewriteFlavors(+id, flavorIds);
+  await rewriteActions(+id, actionIds);
 
   const item = await getItem(+id);
 
@@ -73,15 +60,5 @@ app.post('/api/item/:itemId', async (c) => {
     />
   );
 });
-
-function createRelationIdObject(
-  objectId: string,
-  columnName: 'routeId' | 'actionId' | 'flavorId'
-) {
-  return (relationId: FormDataEntryValue) => ({
-    foodId: +objectId,
-    [columnName]: +relationId,
-  });
-}
 
 export default app;

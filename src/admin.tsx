@@ -79,8 +79,15 @@ export function RenderItem({
   flavors: RawFlavor[];
   actions: RawAction[];
 }) {
+  const colors = [
+    'bg-sky-500',
+    'bg-blue-500',
+    'bg-gray-500',
+    'bg-orange-500',
+    'bg-red-500',
+  ];
   return (
-    <div>
+    <div class={`${colors[item.food.temperature ?? -1]}/40`}>
       <h1 class="text-2xl text-center">{item.food.name}</h1>
       <form
         class="flex flex-col gap-2 p-2 w-full max-w-[765px]"
