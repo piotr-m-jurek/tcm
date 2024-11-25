@@ -17,6 +17,9 @@ export async function rewriteActions(
   actionIds: FormDataEntryValue[]
 ) {
   await db.delete(schema.foodActions).where(eq(schema.foodActions.foodId, id));
+  if (actionIds.length <= 0) {
+    return;
+  }
   await db
     .insert(schema.foodActions)
     .values(actionIds.map(createRelationIdObject(id, 'actionId')));
@@ -27,6 +30,9 @@ export async function rewriteFlavors(
   flavorIds: FormDataEntryValue[]
 ) {
   await db.delete(schema.foodFlavors).where(eq(schema.foodFlavors.foodId, id));
+  if (flavorIds.length <= 0) {
+    return;
+  }
   await db
     .insert(schema.foodFlavors)
     .values(flavorIds.map(createRelationIdObject(id, 'flavorId')));
@@ -37,6 +43,9 @@ export async function rewriteRoutes(
   routeIds: FormDataEntryValue[]
 ) {
   await db.delete(schema.foodRoutes).where(eq(schema.foodRoutes.foodId, id));
+  if (routeIds.length <= 0) {
+    return;
+  }
   await db
     .insert(schema.foodRoutes)
     .values(routeIds.map(createRelationIdObject(id, 'routeId')));

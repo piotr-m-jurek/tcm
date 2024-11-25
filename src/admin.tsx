@@ -30,9 +30,11 @@ export async function renderAdminView(c: Context) {
 export async function updateItem(c: Context) {
   const id = c.req.param('itemId');
   const formData = await c.req.formData();
-  const routeIds = formData.getAll(routeConstants.admin.routes);
-  const flavorIds = formData.getAll(routeConstants.admin.flavors);
-  const actionIds = formData.getAll(routeConstants.admin.actions);
+  const routeIds = formData.getAll(routeConstants.admin.routes) ?? [];
+  const flavorIds = formData.getAll(routeConstants.admin.flavors) ?? [];
+  const actionIds = formData.getAll(routeConstants.admin.actions) ?? [];
+
+  console.log({ id, formData, routeIds, flavorIds, actionIds });
 
   await rewriteRoutes(+id, routeIds);
   await rewriteFlavors(+id, flavorIds);
