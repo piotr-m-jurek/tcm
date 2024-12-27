@@ -1,5 +1,10 @@
 import { aggregateAdminItems } from './db/mappers';
-import { getItem, RawItem } from './db/queries';
+import {
+  getItem,
+  getRawTemperatures,
+  getRawTypes,
+  RawItem,
+} from './db/queries';
 import { Context } from 'hono';
 
 import { getItems } from './db/queries';
@@ -13,12 +18,16 @@ export async function renderAdminView(c: Context) {
   const rawRoutes = await getRawRoutes();
   const rawFlavors = await getRawFlavors();
   const rawActions = await getRawActions();
+  const rawTemperatures = await getRawTemperatures();
+  const rawTypes = await getRawTypes();
   const items: RawItem[] = await getItems();
 
   const aggregated = aggregateAdminItems(items);
 
   return c.html(
     <AdminView
+      rawTemperatures={rawTemperatures}
+      rawTypes={rawTypes}
       rawRoutes={rawRoutes}
       rawFlavors={rawFlavors}
       rawActions={rawActions}
@@ -33,8 +42,12 @@ export async function updateItem(c: Context) {
   const routeIds = formData.getAll(routeConstants.admin.routes) ?? [];
   const flavorIds = formData.getAll(routeConstants.admin.flavors) ?? [];
   const actionIds = formData.getAll(routeConstants.admin.actions) ?? [];
+  const temperatureId = formData.get(routeConstants.admin.temperature) ?? -1;
 
   if (!id) {
+    return;
+  }
+  if (+temperatureId < 0) {
     return;
   }
 
@@ -48,9 +61,13 @@ export async function updateItem(c: Context) {
   const rawActions = await getRawActions();
   const rawFlavors = await getRawFlavors();
   const rawRoutes = await getRawRoutes();
+  const rawTemperatures = await getRawTemperatures();
+  const rawTypes = await getRawTypes();
 
   return c.html(
     <RenderItem
+      temperatures={rawTemperatures}
+      types={rawTypes}
       item={aggregated[id]}
       actions={rawActions}
       flavors={rawFlavors}

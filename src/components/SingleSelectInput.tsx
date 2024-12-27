@@ -1,6 +1,6 @@
 import { html } from 'hono/html';
 
-export function ToggleInput({
+export function SingleSelectInput({
   name,
   value,
   label,
@@ -12,15 +12,9 @@ export function ToggleInput({
   return html`
     <label
       class="cursor-pointer select-none border rounded-md p-2 flex items-center justify-center"
-      x-bind:class="${name}.includes('${value}') ? 'bg-green-100' : 'bg-transparent'"
+      x-bind:class="${name} === '${value}' ? 'bg-green-100' : 'bg-transparent'"
     >
-      <input
-        type="checkbox"
-        name="${name}"
-        x-model="${name}"
-        value="${value}"
-        hidden
-      />
+      <input type="radio" x-model="${name}" value="${value}" hidden />
       ${label}
     </label>
   `;
