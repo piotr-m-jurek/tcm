@@ -90,3 +90,36 @@ await db.insert(schema.type).values(
     };
   })
 );
+
+await db.insert(schema.foodRoutes).values(
+  await prepareCSV('./seeds/alimento-rutas.csv', (row) => {
+    const [rawId, foodId, routeId] = row;
+    return {
+      id: getNumber(rawId),
+      foodId: +foodId,
+      routeId: +routeId,
+    };
+  })
+);
+
+await db.insert(schema.foodActions).values(
+  await prepareCSV('./seeds/alimento-acciones.csv', (row) => {
+    const [rawId, foodId, actionId] = row;
+    return {
+      id: getNumber(rawId),
+      foodId: +foodId,
+      actionId: +actionId,
+    };
+  })
+);
+
+await db.insert(schema.foodFlavors).values(
+  await prepareCSV('./seeds/alimento-sabores.csv', (row) => {
+    const [rawId, foodId, flavorId] = row;
+    return {
+      id: getNumber(rawId),
+      foodId: +foodId,
+      flavorId: +flavorId,
+    };
+  })
+);
