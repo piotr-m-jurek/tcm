@@ -9,7 +9,12 @@ import { Context } from 'hono';
 
 import { getItems } from './db/queries';
 import { getRawActions, getRawFlavors, getRawRoutes } from './db/queries';
-import { rewriteActions, rewriteFlavors, rewriteRoutes } from './db/writes';
+import {
+  rewriteActions,
+  rewriteFlavors,
+  rewriteItem,
+  rewriteRoutes,
+} from './db/writes';
 import { AdminView } from './views/admin';
 import { RenderItem } from './views/admin/RenderItem';
 import { routeConstants } from './shared/routes';
@@ -43,17 +48,24 @@ export async function updateItem(c: Context) {
   const flavorIds = formData.getAll(routeConstants.admin.flavors) ?? [];
   const actionIds = formData.getAll(routeConstants.admin.actions) ?? [];
   const temperatureId = formData.get(routeConstants.admin.temperature) ?? -1;
+  const typeId = formData.get(routeConstants.admin.type) ?? -1;
 
   if (!id) {
     return;
   }
   if (+temperatureId < 0) {
-    return;
+    return c.text('invalid temperatureId:' + temperatureId, 400);
+  }
+
+  if (+typeId < 0) {
+    return c.text('invalid typeid' + typeId, 400);
   }
 
   await rewriteRoutes(+id, routeIds);
   await rewriteFlavors(+id, flavorIds);
   await rewriteActions(+id, actionIds);
+
+  await rewriteItem(+id, { temperature: +temperatureId, type: +typeId });
 
   const item = await getItem(+id);
 

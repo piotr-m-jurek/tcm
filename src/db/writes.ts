@@ -50,3 +50,13 @@ export async function rewriteRoutes(
     .insert(schema.foodRoutes)
     .values(routeIds.map(createRelationIdObject(id, 'routeId')));
 }
+
+export async function rewriteItem(
+  id: number,
+  { temperature, type }: { temperature?: number; type?: number }
+) {
+  await db
+    .update(schema.foodList)
+    .set({ temperature, type })
+    .where(eq(schema.foodList.id, id));
+}
