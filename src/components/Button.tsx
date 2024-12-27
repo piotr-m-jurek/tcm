@@ -1,4 +1,5 @@
-import { assertNever, cn } from '../shared';
+import { assertNever } from '../shared/assertNever';
+import { cn } from '../shared/cn';
 import { Children } from './types';
 
 export function Button({

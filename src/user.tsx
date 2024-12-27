@@ -11,7 +11,7 @@ import {
 } from './db/queries';
 import { aggregateUserItems } from './db/mappers';
 
-export const userView = async (c: Context) => {
+export const renderUserView = async (c: Context) => {
   const items = await getItems();
   const rawRoutes = await getRawRoutes();
   const rawActions = await getRawActions();

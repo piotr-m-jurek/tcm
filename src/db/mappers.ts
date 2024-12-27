@@ -29,24 +29,28 @@ export const aggregateAdminItem = (
   rawItem: RawItem
 ): AggregatedItem => {
   const newItem = { ...item };
+
   if (
     rawItem['food-routes']?.routeId &&
     !newItem.routes.includes(rawItem['food-routes']?.routeId)
   ) {
     newItem.routes.push(rawItem['food-routes']?.routeId);
   }
+
   if (
     rawItem['food-actions']?.actionId &&
     !newItem.actions.includes(rawItem['food-actions']?.actionId)
   ) {
     newItem.actions.push(rawItem['food-actions']?.actionId);
   }
+
   if (
     rawItem['food-flavors']?.flavorId &&
     !newItem.flavors.includes(rawItem['food-flavors'].flavorId)
   ) {
     newItem.flavors.push(rawItem['food-flavors'].flavorId);
   }
+
   return newItem;
 };
 
@@ -99,48 +103,29 @@ export const aggregateUserItem = (
   const foodType = rawItem.food.type;
   const foodTemperature = rawItem.food.temperature;
 
-  if (
-    itemRoutes?.routeId &&
-    !(newItem.routes?.map((r) => r.id) ?? []).includes(itemRoutes.routeId)
-  ) {
-    const route = rawRoutes.find((r) => r.id === itemRoutes.routeId);
-    if (route) {
-      newItem.routes.push(route);
-    }
+  const route = rawRoutes.find((r) => r.id === itemRoutes?.routeId);
+  if (route) {
+    newItem.routes.push(route);
   }
-  if (
-    itemActions?.actionId &&
-    !(newItem.actions?.map((a) => a.id) ?? []).includes(itemActions.actionId)
-  ) {
-    const action = rawActions.find((r) => r.id === itemActions.actionId);
-    if (action) {
-      newItem.actions.push(action);
-    }
+
+  const action = rawActions.find((r) => r.id === itemActions?.actionId);
+  if (action) {
+    newItem.actions.push(action);
   }
-  if (
-    itemFlavors?.flavorId &&
-    !(newItem.flavors?.map((f) => f.id) ?? []).includes(itemFlavors.flavorId)
-  ) {
-    const flavor = rawFlavors.find((r) => r.id === itemFlavors.flavorId);
-    if (flavor) {
-      newItem.flavors.push(flavor);
-    }
+
+  const flavor = rawFlavors.find((r) => r.id === itemFlavors?.flavorId);
+  if (flavor) {
+    newItem.flavors.push(flavor);
   }
-  if (!newItem.type) {
-    const type = rawTypes?.find((r) => r.id === foodType);
-    if (newItem.food.id === 1) {
-      console.log('types and itemtypes \n\n');
-      console.log(rawTypes, type, foodType);
-    }
-    if (type !== undefined) {
-      newItem.type = type;
-    }
+
+  const type = rawTypes?.find((r) => r.id === foodType);
+  if (type !== undefined) {
+    newItem.type = type;
   }
-  if (!newItem.temperature) {
-    const temperature = rawTemperatures.find((r) => r.id === foodTemperature);
-    if (temperature) {
-      newItem.temperature = temperature;
-    }
+
+  const temperature = rawTemperatures.find((r) => r.id === foodTemperature);
+  if (temperature) {
+    newItem.temperature = temperature;
   }
   return newItem;
 };

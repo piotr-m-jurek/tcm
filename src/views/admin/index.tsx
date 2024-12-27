@@ -8,15 +8,15 @@ export { AdminView };
 export { RenderItem } from './RenderItem';
 
 function AdminView({
-  items,
-  actions,
-  flavors,
-  routes,
+  items: items,
+  rawActions,
+  rawFlavors,
+  rawRoutes,
 }: {
   items: AggregatedItem[];
-  actions: RawAction[];
-  flavors: RawFlavor[];
-  routes: RawRoute[];
+  rawActions: RawAction[];
+  rawFlavors: RawFlavor[];
+  rawRoutes: RawRoute[];
 }) {
   return (
     <Layout>
@@ -25,9 +25,9 @@ function AdminView({
         {items.map((item) => (
           <RenderItem
             item={item}
-            actions={actions}
-            flavors={flavors}
-            routes={routes}
+            actions={rawActions}
+            flavors={rawFlavors}
+            routes={rawRoutes}
           />
         ))}
       </div>

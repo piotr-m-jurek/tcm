@@ -7,7 +7,7 @@ import { getRawActions, getRawFlavors, getRawRoutes } from './db/queries';
 import { rewriteActions, rewriteFlavors, rewriteRoutes } from './db/writes';
 import { AdminView } from './views/admin';
 import { RenderItem } from './views/admin/RenderItem';
-import { routeConstants } from './shared';
+import { routeConstants } from './shared/routes';
 
 export async function renderAdminView(c: Context) {
   const rawRoutes = await getRawRoutes();
@@ -19,9 +19,9 @@ export async function renderAdminView(c: Context) {
 
   return c.html(
     <AdminView
-      routes={rawRoutes}
-      flavors={rawFlavors}
-      actions={rawActions}
+      rawRoutes={rawRoutes}
+      rawFlavors={rawFlavors}
+      rawActions={rawActions}
       items={Object.values(aggregated)}
     />
   );
@@ -34,7 +34,9 @@ export async function updateItem(c: Context) {
   const flavorIds = formData.getAll(routeConstants.admin.flavors) ?? [];
   const actionIds = formData.getAll(routeConstants.admin.actions) ?? [];
 
-  console.log({ id, formData, routeIds, flavorIds, actionIds });
+  if (!id) {
+    return;
+  }
 
   await rewriteRoutes(+id, routeIds);
   await rewriteFlavors(+id, flavorIds);

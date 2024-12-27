@@ -2,7 +2,7 @@ import { Button } from '../../components/Button';
 import { Select, Option } from '../../components/Select';
 import { AggregatedItem } from '../../db/mappers';
 import { RawFlavor, RawRoute, RawAction } from '../../db/queries';
-import { routeConstants } from '../../shared';
+import { routeConstants } from '../../shared/routes';
 
 type RenderCollection<Col> = {
   collection: Col[];
