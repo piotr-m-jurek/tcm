@@ -1,5 +1,3 @@
-import { Layout } from '../../components/layout';
-
 import type {
   RawAction,
   RawFlavor,
@@ -29,23 +27,21 @@ function AdminView({
   rawTypes: RawType[];
 }) {
   return (
-    <Layout>
-      <div class="flex flex-col w-full gap-4">
-        <h1 class="text-4xl text-center">Assign route</h1>
-        <br />
-        <div class="flex flex-col">
-          {items.map((item) => (
-            <RenderItem
-              item={item}
-              actions={rawActions}
-              flavors={rawFlavors}
-              routes={rawRoutes}
-              temperatures={rawTemperatures}
-              types={rawTypes}
-            />
-          ))}
-        </div>
+    <div class="flex flex-col w-full gap-4">
+      <h1 class="text-4xl text-center">Assign route</h1>
+      <br />
+      <div class="flex flex-col">
+        {items.map((item) => (
+          <RenderItem
+            item={item}
+            actions={rawActions}
+            flavors={rawFlavors}
+            routes={rawRoutes}
+            temperatures={rawTemperatures}
+            types={rawTypes}
+          />
+        ))}
       </div>
-    </Layout>
+    </div>
   );
 }
