@@ -104,22 +104,22 @@ export const aggregateUserItem = (
   const foodTemperature = rawItem.food.temperature;
 
   const route = rawRoutes.find((r) => r.id === itemRoutes?.routeId);
-  if (route) {
+  if (route && !newItem.routes.includes(route)) {
     newItem.routes.push(route);
   }
 
   const action = rawActions.find((r) => r.id === itemActions?.actionId);
-  if (action) {
+  if (action && !newItem.actions.includes(action)) {
     newItem.actions.push(action);
   }
 
   const flavor = rawFlavors.find((r) => r.id === itemFlavors?.flavorId);
-  if (flavor) {
+  if (flavor && !newItem.flavors.includes(flavor)) {
     newItem.flavors.push(flavor);
   }
 
   const type = rawTypes?.find((r) => r.id === foodType);
-  if (type !== undefined) {
+  if (type) {
     newItem.type = type;
   }
 
@@ -127,6 +127,7 @@ export const aggregateUserItem = (
   if (temperature) {
     newItem.temperature = temperature;
   }
+
   return newItem;
 };
 

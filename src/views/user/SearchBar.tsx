@@ -15,15 +15,8 @@ export async function SearchBar() {
   const types = await getRawTypes();
   const temperatures = await getRawTemperatures();
 
-  const initialState = {
-    [routeConstants.user.routes]: [],
-    [routeConstants.user.flavors]: [],
-    [routeConstants.user.actions]: [],
-    [routeConstants.user.temperature]: [],
-    [routeConstants.user.type]: [],
-  };
   return (
-    <form x-data={JSON.stringify(initialState)}>
+    <form>
       <div class="mb-6">
         <input
           type="text"
@@ -42,6 +35,7 @@ export async function SearchBar() {
               name={routeConstants.user.actions}
               label={action.name}
               value={action.id}
+              checked={false}
             />
           ))}
         </details>
@@ -53,6 +47,7 @@ export async function SearchBar() {
               name={routeConstants.user.temperature}
               label={`${temp.symbol} ${temp.name}`}
               value={temp.id}
+              checked={false}
             />
           ))}
         </details>
@@ -63,6 +58,7 @@ export async function SearchBar() {
               name={routeConstants.user.routes}
               value={route.id}
               label={`${route.shortName} ${route.name}`}
+              checked={false}
             />
           ))}
         </details>
@@ -74,6 +70,7 @@ export async function SearchBar() {
               name={routeConstants.user.routes}
               value={flavor.id}
               label={flavor.name}
+              checked={false}
             />
           ))}
         </details>
@@ -85,6 +82,7 @@ export async function SearchBar() {
               name={routeConstants.user.type}
               value={type.id}
               label={type.name}
+              checked={false}
             />
           ))}
         </details>

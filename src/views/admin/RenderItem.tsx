@@ -15,44 +15,56 @@ import { routeConstants } from '../../shared/routes';
 type RenderCollection<Col> = {
   collection: Col[];
   name: string;
+  item: AggregatedItem;
 };
 
-function RenderFlavors({ collection, name }: RenderCollection<RawFlavor>) {
+function RenderFlavors({
+  collection,
+  name,
+  item,
+}: RenderCollection<RawFlavor>) {
   return (
     <div class="flex flex-col gap-1">
       {collection.map((flavor) => (
         <ToggleInput
           name={name}
           label={`${flavor.symbol} ${flavor.name}`}
-          value={flavor.id.toString()}
+          value={flavor.id}
+          checked={item.flavors.includes(flavor.id)}
         />
       ))}
     </div>
   );
 }
 
-function RenderRoutes({ collection, name }: RenderCollection<RawRoute>) {
+function RenderRoutes({ collection, name, item }: RenderCollection<RawRoute>) {
   return (
     <div class="flex flex-col gap-1">
       {collection.map((route) => (
         <ToggleInput
           name={name}
           label={`${route.shortName} ${route.name}`}
-          value={route.id.toString()}
+          value={route.id}
+          checked={item.routes.includes(route.id)}
         />
       ))}
     </div>
   );
 }
 
-function RenderActions({ collection, name }: RenderCollection<RawAction>) {
+function RenderActions({
+  collection,
+  name,
+  item,
+}: RenderCollection<RawAction>) {
   return (
     <div class="flex flex-col gap-1">
       {collection.map((action) => (
         <ToggleInput
           name={name}
           label={`${action.name}`}
-          value={action.id.toString()}
+          value={action.id}
+          checked={item.actions.includes(action.id)}
         />
       ))}
     </div>
@@ -110,14 +122,6 @@ export function RenderItem({
   temperatures: RawTemperature[];
   types: RawType[];
 }) {
-  const initialState = JSON.stringify({
-    [routeConstants.admin.flavors]: item.flavors.map(String),
-    [routeConstants.admin.temperature]: `${item.food.temperature}`,
-    [routeConstants.admin.type]: `${item.food.type}`,
-    [routeConstants.admin.actions]: item.actions.map(String),
-    [routeConstants.admin.routes]: item.routes.map(String),
-  });
-
   const colors = [
     'bg-red-500',
     'bg-orange-500',
@@ -127,10 +131,7 @@ export function RenderItem({
   ];
 
   return (
-    <div
-      class={`${colors[(item.food.temperature ?? 0) - 1]}/40`}
-      x-data={initialState}
-    >
+    <div class={`${colors[(item.food.temperature ?? 0) - 1]}/40`}>
       <h1 class="text-2xl text-center">{item.food.name}</h1>
       <form
         class="flex flex-col gap-2 p-2 w-full "
@@ -142,6 +143,7 @@ export function RenderItem({
           <div class="flex flex-col gap w-full">
             <h1 class="text-2xl text-bold">Routes</h1>
             <RenderRoutes
+              item={item}
               name={routeConstants.admin.routes}
               collection={routes}
             />

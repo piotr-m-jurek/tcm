@@ -1,27 +1,27 @@
-import { html } from 'hono/html';
-
 export function ToggleInput({
   name,
   value,
   label,
+  checked,
 }: {
   name: string;
   label: string;
   value: number;
+  checked: boolean;
 }) {
-  return html`
-    <label
-      class="cursor-pointer select-none border rounded-md p-2 flex items-center justify-center"
-      x-bind:class="${name}.includes('${value}') ? 'bg-green-100' : 'bg-transparent'"
-    >
+  return (
+    <label>
       <input
         type="checkbox"
-        name="${name}"
-        x-model="${name}"
-        value="${value}"
+        class="peer"
+        name={name}
+        value={value}
         hidden
+        checked={checked}
       />
-      ${label}
+      <div class="cursor-pointer select-none border rounded-md p-2 flex items-center justify-center peer-checked:bg-green-200">
+        {label}
+      </div>
     </label>
-  `;
+  );
 }

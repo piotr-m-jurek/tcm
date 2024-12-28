@@ -50,7 +50,8 @@ export function UserView({ items }: { items: UserItem[] }) {
     return (
       <div
         x-data={initialState}
-        class="relative bg-slate-100 container mx-auto px-4 py-8 m-1"
+        class="relative  container mx-auto px-4 py-8 m-1"
+        style={"font-family: 'Courier New', 'Courier', monospace;"}
       >
         {children}
       </div>
@@ -59,7 +60,7 @@ export function UserView({ items }: { items: UserItem[] }) {
 
   function ChildrenWrapper({ children }: { children: Children }) {
     return (
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 bg-slate-100 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {children}
       </div>
     );
