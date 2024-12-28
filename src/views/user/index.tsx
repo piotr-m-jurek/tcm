@@ -11,6 +11,7 @@ function ExtendedSearch() {
       <div
         x-bind:class={`${state.advancedSearch} ? "translate-y-0" :"translate-y-[82%]"`}
         class={cn(
+          'has-[:checked]:translate-y-0 translate-y-[82%]',
           'flex flex-col gap-3 overflow-auto',
           'bg-gray-200 p-4',
           'fixed left-0 right-0 w-full h-full transform transition-transform duration-300'
@@ -23,20 +24,16 @@ function ExtendedSearch() {
 
   function Trigger() {
     return (
-      <div
-        class="w-full flex justify-center"
-        x-on:click={`${state.advancedSearch} = !${state.advancedSearch}`}
-      >
+      <label class="flex justify-center w-full">
+        <input type="checkbox" hidden />
         <i data-lucide="chevrons-up-down" />
-      </div>
+      </label>
     );
   }
 
   return (
     <Wrapper>
-      <div class="flex justify-center w-full">
-        <Trigger />
-      </div>
+      <Trigger />
       <SearchBar />
     </Wrapper>
   );
@@ -44,12 +41,8 @@ function ExtendedSearch() {
 
 export function UserView({ items }: { items: UserItem[] }) {
   function Wrapper({ children }: { children: Children }) {
-    const initialState = JSON.stringify({
-      [state.advancedSearch]: false,
-    });
     return (
       <div
-        x-data={initialState}
         class="relative container mx-auto px-4 py-8 m-1"
         style={"font-family: 'Courier New', 'Courier', monospace;"}
       >
@@ -67,16 +60,15 @@ export function UserView({ items }: { items: UserItem[] }) {
   }
 
   return (
-    <>
-      <nav>dupa</nav>
+    <div class="flex flex-col w-full">
       <Wrapper>
+        <ExtendedSearch />
         <ChildrenWrapper>
           {items.map((item) => (
             <FoodItem item={item} />
           ))}
         </ChildrenWrapper>
-        <ExtendedSearch />
       </Wrapper>
-    </>
+    </div>
   );
 }

@@ -27,7 +27,7 @@ app.post(routes.testingViewData, async (c) => {
   const formData = await c.req.formData();
   const routes = formData.getAll('routes');
   const multi = formData.getAll('multi');
-  console.log(routes);
+  console.log(JSON.stringify({ routes, multi }, null, 2));
 });
 
 export default app;

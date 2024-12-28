@@ -9,7 +9,7 @@ function TestingViewContent() {
   const multi = 'multi';
 
   return (
-    <form hx-swap="none" hx-post={routes.testingViewData} class="flex gap-5">
+    <form hx-swap="none" class="flex gap-5">
       <div class="flex flex-col gap-4">
         <SingleSelectInput
           name={name}
@@ -35,7 +35,13 @@ function TestingViewContent() {
         <ToggleInput label="multi2" value={2} name={multi} checked={false} />
         <ToggleInput label="multi3" value={3} name={multi} checked={false} />
       </div>
-      <button type="submit">Submit!</button>
+      <button
+        hx-trigger="mouseenter"
+        hx-post={routes.testingViewData}
+        type="submit"
+      >
+        Submit!
+      </button>
     </form>
   );
 }
