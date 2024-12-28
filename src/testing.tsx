@@ -47,5 +47,5 @@ function TestingViewContent() {
 }
 
 export function renderTestingView(c: Context) {
-  return c.html(<TestingViewContent />);
+  return c.render(<TestingViewContent />);
 }

@@ -1,6 +1,5 @@
 import { Context } from 'hono';
 import { UserView } from './views/user';
-import { Layout } from './components/layout';
 import {
   getItems,
   getRawRoutes,
@@ -26,9 +25,5 @@ export const renderUserView = async (c: Context) => {
     rawTypes,
     rawTemperatures,
   });
-  return c.html(
-    <Layout>
-      <UserView items={Object.values(userItems)} />
-    </Layout>
-  );
+  return c.render(<UserView items={Object.values(userItems)} />);
 };

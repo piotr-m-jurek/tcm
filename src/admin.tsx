@@ -29,7 +29,7 @@ export async function renderAdminView(c: Context) {
 
   const aggregated = aggregateAdminItems(items);
 
-  return c.html(
+  return c.render(
     <AdminView
       rawTemperatures={rawTemperatures}
       rawTypes={rawTypes}
