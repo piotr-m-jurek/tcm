@@ -30,7 +30,7 @@ function RenderFlavors({
           name={name}
           label={`${flavor.symbol} ${flavor.name}`}
           value={flavor.id}
-          checked={item.flavors.includes(flavor.id)}
+          checked={item?.flavors?.includes(flavor.id)}
         />
       ))}
     </div>
@@ -74,9 +74,11 @@ function RenderActions({
 function RenderTemperature({
   name,
   collection,
+  item,
 }: {
   name: string;
   collection: RawTemperature[];
+  item: AggregatedItem;
 }) {
   return (
     <>
@@ -85,6 +87,7 @@ function RenderTemperature({
           name={name}
           value={temperature.id}
           label={`${temperature.symbol} ${temperature.name}`}
+          checked={item.food.temperature === temperature.id}
         />
       ))}
     </>
@@ -94,14 +97,21 @@ function RenderTemperature({
 function RenderType({
   name,
   collection,
+  item,
 }: {
   name: string;
   collection: RawType[];
+  item: AggregatedItem;
 }) {
   return (
     <div class="grid grid-cols-2 grid-rows-8 gap-2">
       {collection.map((type) => (
-        <SingleSelectInput name={name} value={type.id} label={type.name} />
+        <SingleSelectInput
+          name={name}
+          value={type.id}
+          label={type.name}
+          checked={item.food.type === type.id}
+        />
       ))}
     </div>
   );
@@ -151,6 +161,7 @@ export function RenderItem({
           <div class="flex flex-col gap w-full">
             <h1 class="text-2xl text-bold">Flavors</h1>
             <RenderFlavors
+              item={item}
               name={routeConstants.admin.flavors}
               collection={flavors}
             />
@@ -158,6 +169,7 @@ export function RenderItem({
           <div class="flex flex-col gap w-full">
             <h1 class="text-2xl text-bold">Actions</h1>
             <RenderActions
+              item={item}
               name={routeConstants.admin.actions}
               collection={actions}
             />
@@ -167,11 +179,16 @@ export function RenderItem({
             <RenderTemperature
               name={routeConstants.admin.temperature}
               collection={temperatures}
+              item={item}
             />
           </div>
           <div class="flex flex-col gap w-full">
             <h1 class="text-2xl text-bold">Type</h1>
-            <RenderType name={routeConstants.admin.type} collection={types} />
+            <RenderType
+              name={routeConstants.admin.type}
+              collection={types}
+              item={item}
+            />
           </div>
         </div>
         <Button align="center" type="submit">

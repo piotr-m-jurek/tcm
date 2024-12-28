@@ -6,6 +6,9 @@
     - purge db and migrations
     - setup fresh db with all the data
 - [ ] prepare data with relation many-to-one
+- [ ] legend on click
+- [ ] do something with tailwindcss,
+ - but avoid the build step
 
 
 - [ ] (v2) offline access
