@@ -1,6 +1,7 @@
 import { Children } from '../../components/types';
 import { UserItem } from '../../db/mappers';
 import { cn } from '../../shared/cn';
+import { state } from '../../shared/state';
 import { FoodItem } from './FoodItem';
 import { SearchBar } from './SearchBar';
 
@@ -8,9 +9,9 @@ function ExtendedSearch() {
   function Wrapper({ children }: { children: Children }) {
     return (
       <div
-        x-bind:class='open ? "translate-y-0" :"translate-y-[82%]"'
+        x-bind:class={`${state.advancedSearch} ? "translate-y-0" :"translate-y-[82%]"`}
         class={cn(
-          'flex flex-col gap-3',
+          'flex flex-col gap-3 overflow-auto',
           'bg-gray-200 p-4',
           'fixed left-0 right-0 w-full h-full transform transition-transform duration-300'
         )}
@@ -22,29 +23,33 @@ function ExtendedSearch() {
 
   function Trigger() {
     return (
-      <div class="w-full flex justify-center" x-on:click="open = !open">
+      <div
+        class="w-full flex justify-center"
+        x-on:click={`${state.advancedSearch} = !${state.advancedSearch}`}
+      >
         <i data-lucide="chevrons-up-down" />
       </div>
     );
   }
 
   return (
-    <>
-      <Wrapper>
-        <div class="flex justify-center w-full">
-          <Trigger />
-        </div>
-        <SearchBar />
-      </Wrapper>
-    </>
+    <Wrapper>
+      <div class="flex justify-center w-full">
+        <Trigger />
+      </div>
+      <SearchBar />
+    </Wrapper>
   );
 }
 
 export function UserView({ items }: { items: UserItem[] }) {
   function Wrapper({ children }: { children: Children }) {
+    const initialState = JSON.stringify({
+      [state.advancedSearch]: false,
+    });
     return (
       <div
-        x-data="{ open: false }"
+        x-data={initialState}
         class="relative bg-slate-100 container mx-auto px-4 py-8 m-1"
       >
         {children}

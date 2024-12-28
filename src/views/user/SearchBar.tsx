@@ -1,14 +1,33 @@
-export function SearchBar() {
+import { ToggleInput } from '../../components/ToggleInput';
+import {
+  getRawActions,
+  getRawFlavors,
+  getRawRoutes,
+  getRawTemperatures,
+  getRawTypes,
+} from '../../db/queries';
+import { routeConstants } from '../../shared/routes';
+
+export async function SearchBar() {
+  const routes = await getRawRoutes();
+  const actions = await getRawActions();
+  const flavors = await getRawFlavors();
+  const types = await getRawTypes();
+  const temperatures = await getRawTemperatures();
+
+  const initialState = {
+    [routeConstants.user.routes]: [],
+    [routeConstants.user.flavors]: [],
+    [routeConstants.user.actions]: [],
+    [routeConstants.user.temperature]: [],
+    [routeConstants.user.type]: [],
+  };
   return (
-    <form>
+    <form x-data={JSON.stringify(initialState)}>
       <div class="mb-6">
         <input
           type="text"
           name="query"
-          hx-trigger="input changed delay:500ms"
-          hx-push-url="true"
-          hx-select=".grid"
-          hx-target=".grid"
           placeholder="Search foods..."
           class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
@@ -16,65 +35,58 @@ export function SearchBar() {
 
       {/* <!-- Filter Options --> */}
       <div class="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {/* <!-- Category Filter --> */}
         <details>
-          <summary>Category</summary>
-          <select
-            id="category"
-            multiple
-            class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="fruits">Fruits</option>
-            <option value="vegetables">Vegetables</option>
-            <option value="grains">Grains</option>
-            <option value="protein">Protein</option>
-            <option value="dairy">Dairy</option>
-          </select>
-        </details>
-        {/* <!-- Dietary Restrictions Filter --> */}
-        <details>
-          <summary>Dietary Restrictions</summary>
-          <select
-            id="dietary"
-            multiple
-            class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="vegan">Vegan</option>
-            <option value="vegetarian">Vegetarian</option>
-            <option value="gluten-free">Gluten-free</option>
-            <option value="lactose-free">Lactose-free</option>
-            <option value="nut-free">Nut-free</option>
-          </select>
+          <summary>Actions</summary>
+          {actions.map((action) => (
+            <ToggleInput
+              name={routeConstants.user.actions}
+              label={action.name}
+              value={action.id}
+            />
+          ))}
         </details>
 
-        {/* <!-- Nutrient Content Filter --> */}
         <details>
-          <summary>Nutrient Content</summary>
-          <select
-            id="nutrient"
-            multiple
-            class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="high-protein">High Protein</option>
-            <option value="low-fat">Low Fat</option>
-            <option value="high-fiber">High Fiber</option>
-            <option value="low-carb">Low Carb</option>
-            <option value="vitamin-rich">Vitamin Rich</option>
-          </select>
+          <summary>Temperatures</summary>
+          {temperatures.map((temp) => (
+            <ToggleInput
+              name={routeConstants.user.temperature}
+              label={`${temp.symbol} ${temp.name}`}
+              value={temp.id}
+            />
+          ))}
+        </details>
+        <details>
+          <summary>Routes</summary>{' '}
+          {routes.map((route) => (
+            <ToggleInput
+              name={routeConstants.user.routes}
+              value={route.id}
+              label={`${route.shortName} ${route.name}`}
+            />
+          ))}
         </details>
 
-        {/* <!-- Preparation Time Filter --> */}
         <details>
-          <summary>Preparation Time</summary>
-          <select
-            id="prep-time"
-            multiple
-            class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="quick">Quick (0-15 min)</option>
-            <option value="medium">Medium (15-30 min)</option>
-            <option value="long">Long (30+ min)</option>
-          </select>
+          <summary>Flavors</summary>{' '}
+          {flavors.map((flavor) => (
+            <ToggleInput
+              name={routeConstants.user.routes}
+              value={flavor.id}
+              label={flavor.name}
+            />
+          ))}
+        </details>
+
+        <details>
+          <summary>Types</summary>
+          {types.map((type) => (
+            <ToggleInput
+              name={routeConstants.user.type}
+              value={type.id}
+              label={type.name}
+            />
+          ))}
         </details>
       </div>
     </form>
