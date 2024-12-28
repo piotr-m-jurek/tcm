@@ -1,0 +1,13 @@
+id ,corto ,largo                
+ 1 ,R     ,riñon               
+ 2 ,V     ,Vejiga              
+ 3 ,H     ,Hígado              
+ 4 ,VB    ,Vesícula Biliar     
+ 5 ,C     ,Corazon             
+ 6 ,ID    ,Intestino Delgado   
+ 7 ,TR    ,Triple Recalentador 
+ 8 ,MC    ,Maestro del Corazón 
+ 9 ,BP    ,Bazo Páncreas       
+10 ,E     ,Estómago            
+11 ,P     ,Pulmón              
+12 ,IG    ,Intestino Grueso    
