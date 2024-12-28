@@ -1,11 +1,7 @@
-import { Style } from 'hono/css';
 import { Children } from '../../components/types';
-import { UserItem } from '../../db/mappers';
 import { cn } from '../../shared/cn';
 import { state } from '../../shared/state';
-import { FoodItem } from './FoodItem';
 import { SearchBar } from './SearchBar';
-import { graphPaper } from './customCSS';
 import { routes } from '../..';
 
 function ExtendedSearch() {

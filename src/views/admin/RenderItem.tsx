@@ -1,5 +1,4 @@
 import { Button } from '../../components/Button';
-import { Select, Option } from '../../components/Select';
 import { SingleSelectInput } from '../../components/SingleSelectInput';
 import { ToggleInput } from '../../components/ToggleInput';
 import { AggregatedItem } from '../../db/mappers';
