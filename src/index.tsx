@@ -1,9 +1,12 @@
 import { Hono } from 'hono';
 import { renderAdminView, updateItem } from './admin';
-import { renderUserView } from './user';
+import { renderUserItems, renderUserView } from './user';
 import { renderTestingView } from './testing';
+import { RootLayout } from './layout';
 
 const app = new Hono();
+
+app.use('*', RootLayout);
 
 export const routes = {
   adminView: '/admin',
@@ -14,7 +17,10 @@ export const routes = {
 };
 
 app.get(routes.adminView, renderAdminView);
+
+app.post(routes.userView, renderUserItems);
 app.get(routes.userView, renderUserView);
+
 app.post(routes.updateItem, updateItem);
 
 // ===================

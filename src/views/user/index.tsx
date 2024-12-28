@@ -6,6 +6,7 @@ import { state } from '../../shared/state';
 import { FoodItem } from './FoodItem';
 import { SearchBar } from './SearchBar';
 import { graphPaper } from './customCSS';
+import { routes } from '../..';
 
 function ExtendedSearch() {
   function Wrapper({ children }: { children: Children }) {
@@ -41,29 +42,10 @@ function ExtendedSearch() {
   );
 }
 
-export function UserView({ items }: { items: UserItem[] }) {
+export function UserView() {
   function Wrapper({ children }: { children: Children }) {
     return (
-      <div
-        class="relative container mx-auto px-4 py-8 m-1"
-        style={"font-family: 'Courier New', 'Courier', monospace;"}
-      >
-        <Style />
-        {children}
-      </div>
-    );
-  }
-
-  function ChildrenWrapper({ children }: { children: Children }) {
-    return (
-      <div
-        class={cn(
-          'grid grid-cols-1 p-2 sm:grid-cols-2 md:grid-cols-3 gap-4',
-          graphPaper
-        )}
-      >
-        {children}
-      </div>
+      <div class="relative container mx-auto px-4 py-8 m-1">{children}</div>
     );
   }
 
@@ -71,11 +53,13 @@ export function UserView({ items }: { items: UserItem[] }) {
     <div class="flex flex-col w-full">
       <Wrapper>
         <ExtendedSearch />
-        <ChildrenWrapper>
-          {items.map((item) => (
-            <FoodItem item={item} />
-          ))}
-        </ChildrenWrapper>
+        <div
+          hx-post={routes.userView}
+          hx-trigger="load"
+          class="grid grid-cols-1 p-2 sm:grid-cols-2 md:grid-cols-3 gap-4"
+        >
+          <div> Loading ... </div>
+        </div>
       </Wrapper>
     </div>
   );

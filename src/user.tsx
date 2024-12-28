@@ -9,8 +9,9 @@ import {
   getRawTemperatures,
 } from './db/queries';
 import { aggregateUserItems } from './db/mappers';
+import { FoodItem } from './views/user/FoodItem';
 
-export const renderUserView = async (c: Context) => {
+export const renderUserItems = async (c: Context) => {
   const items = await getItems();
   const rawRoutes = await getRawRoutes();
   const rawActions = await getRawActions();
@@ -25,5 +26,16 @@ export const renderUserView = async (c: Context) => {
     rawTypes,
     rawTemperatures,
   });
-  return c.render(<UserView items={Object.values(userItems)} />);
+
+  return c.html(
+    <>
+      {Object.values(userItems).map((item) => (
+        <FoodItem item={item} />
+      ))}
+    </>
+  );
+};
+
+export const renderUserView = async (c: Context) => {
+  return c.render(<UserView />);
 };
