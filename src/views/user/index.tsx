@@ -1,18 +1,16 @@
+import { routes } from '../..';
 import { Children } from '../../components/types';
 import { cn } from '../../shared/cn';
-import { state } from '../../shared/state';
 import { SearchBar } from './SearchBar';
-import { routes } from '../../routes';
 
 function ExtendedSearch() {
   function Wrapper({ children }: { children: Children }) {
     return (
       <div
-        x-bind:class={`${state.advancedSearch} ? "translate-y-0" :"translate-y-[82%]"`}
         class={cn(
           'has-[.group:checked]:translate-y-0 translate-y-[82%]',
           'flex flex-col gap-3 overflow-auto',
-          'bg-gray-200 p-4',
+          'bg-amber-50 p-4',
           'fixed left-0 right-0 w-full h-full transform transition-transform duration-300'
         )}
       >
@@ -23,7 +21,7 @@ function ExtendedSearch() {
 
   function Trigger() {
     return (
-      <label class="flex justify-center w-full">
+      <label class="flex justify-center w-full absolute -mt-6">
         <input class="group" type="checkbox" hidden />
         <i data-lucide="chevrons-up-down" />
       </label>
