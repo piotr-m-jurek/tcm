@@ -10,7 +10,7 @@ export function ToggleInput({
   checked: boolean;
 }) {
   return (
-    <label>
+    <label class="flex">
       <input
         type="checkbox"
         class="peer"
