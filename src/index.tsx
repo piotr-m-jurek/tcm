@@ -1,39 +1,37 @@
 import { Hono } from 'hono';
-import { renderAdminView, updateItem } from './admin';
-import { renderUserItems, renderUserView } from './user';
-import { renderTestingView } from './testing';
+import * as admin from './admin';
+import * as user from './user';
+import * as testing from './testing';
 import { RootLayout } from './layout';
+import { routes } from './routes';
 
 const app = new Hono();
 
 app.use('*', RootLayout);
 
-export const routes = {
-  adminView: '/admin',
-  userView: '/',
-  updateItem: '/api/item/:itemId',
-  testingView: '/testing',
-  testingViewData: '/testing/data',
-};
+// =================
+// ===== ADMIN =====
+// =================
+app.get(routes.adminView, admin.renderAdminView);
+app.post(routes.updateItem, admin.updateItem);
 
-app.get(routes.adminView, renderAdminView);
-
-app.post(routes.userView, renderUserItems);
-app.get(routes.userView, renderUserView);
-
-app.post(routes.updateItem, updateItem);
+// ================
+// ===== USER =====
+// ================
+app.post(routes.userView, user.renderUserItems);
+app.get(routes.userView, user.renderUserView);
 
 // ===================
 // ===== TESTING =====
 // ===================
 
-app.get(routes.testingView, renderTestingView);
+app.get(routes.testingView, testing.renderTestingView);
 app.post(routes.testingViewData, async (c) => {
   console.log('post came');
   const formData = await c.req.formData();
   const routes = formData.getAll('routes');
   const multi = formData.getAll('multi');
-  console.log(JSON.stringify({ routes, multi }, null, 2));
+  console.log(JSON.stringify({ formData, routes, multi }, null, 2));
 });
 
 export default app;

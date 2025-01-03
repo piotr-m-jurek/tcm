@@ -13,18 +13,19 @@ import { FoodItem } from './views/user/FoodItem';
 
 export const renderUserItems = async (c: Context) => {
   const items = await getItems();
-  const rawRoutes = await getRawRoutes();
+
   const rawActions = await getRawActions();
   const rawFlavors = await getRawFlavors();
-  const rawTypes = await getRawTypes();
+  const rawRoutes = await getRawRoutes();
   const rawTemperatures = await getRawTemperatures();
+  const rawTypes = await getRawTypes();
 
   const userItems = aggregateUserItems(items, {
-    rawRoutes,
     rawActions,
     rawFlavors,
-    rawTypes,
+    rawRoutes,
     rawTemperatures,
+    rawTypes,
   });
 
   return c.html(

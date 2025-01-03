@@ -1,4 +1,5 @@
 import { jsxRenderer } from 'hono/jsx-renderer';
+
 export const RootLayout = jsxRenderer(({ children }) => (
   <html class="flex size-full">
     <head>

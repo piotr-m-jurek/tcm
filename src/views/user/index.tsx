@@ -2,7 +2,7 @@ import { Children } from '../../components/types';
 import { cn } from '../../shared/cn';
 import { state } from '../../shared/state';
 import { SearchBar } from './SearchBar';
-import { routes } from '../..';
+import { routes } from '../../routes';
 
 function ExtendedSearch() {
   function Wrapper({ children }: { children: Children }) {
