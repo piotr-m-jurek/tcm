@@ -3,7 +3,14 @@ import * as admin from './admin';
 import * as user from './user';
 import * as testing from './testing';
 import { RootLayout } from './layout';
-import { routes } from './routes';
+
+export const routes = {
+  adminView: '/admin',
+  userView: '/',
+  updateItem: '/api/item/:itemId',
+  testingView: '/testing',
+  testingViewData: '/testing/data',
+};
 
 const app = new Hono();
 
@@ -29,9 +36,9 @@ app.get(routes.testingView, testing.renderTestingView);
 app.post(routes.testingViewData, async (c) => {
   console.log('post came');
   const formData = await c.req.formData();
-  const routes = formData.getAll('routes');
+  // const routes = formData.getAll('routes');
   const multi = formData.getAll('multi');
-  console.log(JSON.stringify({ formData, routes, multi }, null, 2));
+  console.log(JSON.stringify({ formData, multi }, null, 2));
 });
 
 export default app;
