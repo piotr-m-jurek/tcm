@@ -1,3 +1,4 @@
+import { html } from 'hono/html';
 import { ToggleInput } from '../../components/ToggleInput';
 import {
   getRawActions,
@@ -30,14 +31,16 @@ export async function SearchBar() {
       <div class="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <details>
           <summary>Actions</summary>
-          {actions.map((action) => (
-            <ToggleInput
-              name={routeConstants.user.actions}
-              label={action.name}
-              value={action.id}
-              checked={false}
-            />
-          ))}
+          <div class="grid grid-cols-2">
+            {actions.map((action) => (
+              <ToggleInput
+                name={routeConstants.user.actions}
+                label={action.name}
+                value={action.id}
+                checked={false}
+              />
+            ))}
+          </div>
         </details>
 
         <details>
@@ -57,7 +60,7 @@ export async function SearchBar() {
             <ToggleInput
               name={routeConstants.user.routes}
               value={route.id}
-              label={`${route.shortName} ${route.name}`}
+              label={`(${route.shortName}) ${route.name}`}
               checked={false}
             />
           ))}
