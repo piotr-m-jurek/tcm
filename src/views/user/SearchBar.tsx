@@ -1,19 +1,19 @@
 import { ToggleInput } from '../../components/ToggleInput';
 import {
-  getRawActions,
-  getRawFlavors,
-  getRawRoutes,
-  getRawTemperatures,
-  getRawTypes,
+  getRawActions_v1,
+  getRawFlavors_v1,
+  getRawRoutes_v1,
+  getRawTemperatures_v1,
+  getRawTypes_v1,
 } from '../../db/queries';
 import { routeConstants } from '../../shared/routes';
 
 export async function SearchBar() {
-  const routes = await getRawRoutes();
-  const actions = await getRawActions();
-  const flavors = await getRawFlavors();
-  const types = await getRawTypes();
-  const temperatures = await getRawTemperatures();
+  const routes = await getRawRoutes_v1();
+  const actions = await getRawActions_v1();
+  const flavors = await getRawFlavors_v1();
+  const types = await getRawTypes_v1();
+  const temperatures = await getRawTemperatures_v1();
 
   return (
     <form>

@@ -1,28 +1,43 @@
 import { eq } from 'drizzle-orm';
 import * as schema from '../../db/schema';
-import { db } from '.';
+import { db, prisma } from '.';
+import { Prisma } from '@prisma/client';
 
-export type RawRoute = Awaited<ReturnType<typeof getRawRoutes>>[number];
-export const getRawRoutes = async () => await db.select().from(schema.route);
+export type RawRoute = Awaited<ReturnType<typeof getRawRoutes_v1>>[number];
+export const getRawRoutes_v1 = async () => await db.select().from(schema.route);
 
-export type RawFlavor = Awaited<ReturnType<typeof getRawFlavors>>[number];
-export const getRawFlavors = async () => await db.select().from(schema.flavor);
+export type RawFlavor = Awaited<ReturnType<typeof getRawFlavors_v1>>[number];
+export const getRawFlavors_v1 = async () =>
+  await db.select().from(schema.flavor);
 
-export type RawType = Awaited<ReturnType<typeof getRawTypes>>[number];
-export const getRawTypes = async () => await db.select().from(schema.type);
+export type RawType = Awaited<ReturnType<typeof getRawTypes_v1>>[number];
+export const getRawTypes_v1 = async () => await db.select().from(schema.type);
 
 export type RawTemperature = Awaited<
-  ReturnType<typeof getRawTemperatures>
+  ReturnType<typeof getRawTemperatures_v1>
 >[number];
-export const getRawTemperatures = async () =>
+export const getRawTemperatures_v1 = async () =>
   await db.select().from(schema.temperature);
 
-export type RawAction = Awaited<ReturnType<typeof getRawActions>>[number];
-export const getRawActions = async () => await db.select().from(schema.action);
+export type RawAction = Awaited<ReturnType<typeof getRawActions_v1>>[number];
+export const getRawActions_v1 = async () =>
+  await db.select().from(schema.action);
 
-export type RawItem = Awaited<ReturnType<typeof getItem>>[number];
+export type RawItem_v1 = Awaited<ReturnType<typeof getItem_v1>>[number];
 
+export type RawItem = Prisma.PromiseReturnType<typeof getItems>[number];
 export const getItems = () =>
+  prisma.food.findMany({
+    include: {
+      food_actions: true,
+      food_flavors: true,
+      food_routes: true,
+      temperature: true,
+      type: true,
+    },
+  });
+
+export const getItems_v1 = () =>
   db
     .select()
     .from(schema.foodList)
@@ -44,5 +59,17 @@ export const getItems = () =>
       eq(schema.foodRoutes.foodId, schema.foodList.id)
     );
 
+export const getItem_v1 = (id: number) =>
+  getItems_v1().where(eq(schema.foodList.id, id));
+
 export const getItem = (id: number) =>
-  getItems().where(eq(schema.foodList.id, id));
+  prisma.food.findUnique({
+    where: { id },
+    include: {
+      food_actions: true,
+      food_flavors: true,
+      food_routes: true,
+      temperature: true,
+      type: true,
+    },
+  });

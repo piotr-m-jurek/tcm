@@ -10,7 +10,7 @@ export const routes = {
   updateItem: '/api/item/:itemId',
   testingView: '/testing',
   testingViewData: '/testing/data',
-};
+} as const;
 
 const app = new Hono();
 

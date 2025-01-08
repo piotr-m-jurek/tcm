@@ -1,14 +1,19 @@
 import { aggregateAdminItems } from './db/mappers';
 import {
-  getItem,
-  getRawTemperatures,
-  getRawTypes,
-  RawItem,
+  getItem_v1,
+  getItems,
+  getRawTemperatures_v1,
+  getRawTypes_v1,
+  RawItem_v1,
 } from './db/queries';
 import { Context } from 'hono';
 
-import { getItems } from './db/queries';
-import { getRawActions, getRawFlavors, getRawRoutes } from './db/queries';
+import { getItems_v1 } from './db/queries';
+import {
+  getRawActions_v1,
+  getRawFlavors_v1,
+  getRawRoutes_v1,
+} from './db/queries';
 import {
   rewriteActions,
   rewriteFlavors,
@@ -20,14 +25,17 @@ import { RenderItem } from './views/admin/RenderItem';
 import { routeConstants } from './shared/routes';
 
 export async function renderAdminView(c: Context) {
-  const rawRoutes = await getRawRoutes();
-  const rawFlavors = await getRawFlavors();
-  const rawActions = await getRawActions();
-  const rawTemperatures = await getRawTemperatures();
-  const rawTypes = await getRawTypes();
-  const items: RawItem[] = await getItems();
+  const rawRoutes = await getRawRoutes_v1();
+  const rawFlavors = await getRawFlavors_v1();
+  const rawActions = await getRawActions_v1();
+  const rawTemperatures = await getRawTemperatures_v1();
+  const rawTypes = await getRawTypes_v1();
+  const items_v1: RawItem_v1[] = await getItems_v1();
+  const items = await getItems();
+  console.log('item_v1', items_v1[0]);
+  console.log('item', items[0]);
 
-  const aggregated = aggregateAdminItems(items);
+  const aggregated = aggregateAdminItems(items_v1);
 
   return c.render(
     <AdminView
@@ -67,14 +75,14 @@ export async function updateItem(c: Context) {
 
   await rewriteItem(+id, { temperature: +temperatureId, type: +typeId });
 
-  const item = await getItem(+id);
+  const item = await getItem_v1(+id);
 
   const aggregated = aggregateAdminItems(item);
-  const rawActions = await getRawActions();
-  const rawFlavors = await getRawFlavors();
-  const rawRoutes = await getRawRoutes();
-  const rawTemperatures = await getRawTemperatures();
-  const rawTypes = await getRawTypes();
+  const rawActions = await getRawActions_v1();
+  const rawFlavors = await getRawFlavors_v1();
+  const rawRoutes = await getRawRoutes_v1();
+  const rawTemperatures = await getRawTemperatures_v1();
+  const rawTypes = await getRawTypes_v1();
 
   return c.html(
     <RenderItem
