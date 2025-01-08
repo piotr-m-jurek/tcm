@@ -17,7 +17,7 @@ import {
 import {
   rewriteActions,
   rewriteFlavors,
-  rewriteItem,
+  rewriteItem_v1,
   rewriteRoutes,
 } from './db/writes';
 import { AdminView } from './views/admin';
@@ -73,7 +73,7 @@ export async function updateItem(c: Context) {
   await rewriteFlavors(+id, flavorIds);
   await rewriteActions(+id, actionIds);
 
-  await rewriteItem(+id, { temperature: +temperatureId, type: +typeId });
+  await rewriteItem_v1(+id, { temperature: +temperatureId, type: +typeId });
 
   const item = await getItem_v1(+id);
 

@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import * as schema from '../../db/schema';
-import { db } from '.';
+import { db, prisma } from '.';
 
 function createRelationIdObject(
   objectId: number,
@@ -52,6 +52,19 @@ export async function rewriteRoutes(
 }
 
 export async function rewriteItem(
+  id: number,
+  { temperature, type }: { temperature?: number; type?: number }
+) {
+  await prisma.food.update({
+    where: { id },
+    data: {
+      temperature: temperature ? { connect: { id: temperature } } : undefined,
+      type: type ? { connect: { id: type } } : undefined,
+    },
+  });
+}
+
+export async function rewriteItem_v1(
   id: number,
   { temperature, type }: { temperature?: number; type?: number }
 ) {
