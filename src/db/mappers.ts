@@ -1,20 +1,20 @@
 import type {
   RawAction,
   RawFlavor,
-  RawItem_v1,
+  RawItems,
   RawRoute,
   RawTemperature,
   RawType,
 } from '../db/queries';
 
 export type AggregatedItem = {
-  food: RawItem_v1['food'];
+  food: RawItems['food'];
   routes: number[];
   actions: number[];
   flavors: number[];
 };
 
-export const aggregateAdminItems = (items: RawItem_v1[]) =>
+export const aggregateAdminItems = (items: RawItems[]) =>
   items.reduce((acc: Record<string, AggregatedItem>, item) => {
     if (!acc[item.food.id]) {
       acc[item.food.id] = createAdminItem(item);
@@ -26,7 +26,7 @@ export const aggregateAdminItems = (items: RawItem_v1[]) =>
 
 export const aggregateAdminItem = (
   item: AggregatedItem,
-  rawItem: RawItem_v1
+  rawItem: RawItems
 ): AggregatedItem => {
   const newItem = { ...item };
 
@@ -54,7 +54,7 @@ export const aggregateAdminItem = (
   return newItem;
 };
 
-export const createAdminItem = (item: RawItem_v1): AggregatedItem => ({
+export const createAdminItem = (item: RawItems): AggregatedItem => ({
   food: item.food,
   routes: [],
   actions: [],
@@ -62,7 +62,7 @@ export const createAdminItem = (item: RawItem_v1): AggregatedItem => ({
 });
 
 export type UserItem = {
-  food: RawItem_v1['food'];
+  food: RawItems['food'];
   routes: RawRoute[];
   actions: RawAction[];
   flavors: RawFlavor[];
@@ -70,7 +70,7 @@ export type UserItem = {
   temperature: RawTemperature | null;
 };
 
-export const createUserItem = (item: RawItem_v1): UserItem => ({
+export const createUserItem = (item: RawItems): UserItem => ({
   food: item.food,
   routes: [],
   actions: [],
@@ -81,7 +81,7 @@ export const createUserItem = (item: RawItem_v1): UserItem => ({
 
 export const aggregateUserItem = (
   item: UserItem,
-  rawItem: RawItem_v1,
+  rawItem: RawItems,
   {
     rawRoutes,
     rawActions,
@@ -132,7 +132,7 @@ export const aggregateUserItem = (
 };
 
 export const aggregateUserItems = (
-  items: RawItem_v1[],
+  items: RawItems[],
   {
     rawRoutes,
     rawActions,

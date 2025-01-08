@@ -12,6 +12,25 @@ function createRelationIdObject(
   });
 }
 
+function createRelationIdObject_v2(
+  objectId: number,
+  columnName: 'route_id' | 'action_id' | 'flavor_id'
+) {
+  return (relationId: FormDataEntryValue) => ({
+    food_id: objectId,
+    [columnName]: +relationId,
+  });
+}
+
+export async function rewriteActions_v2(
+  id: number,
+  actionIds: FormDataEntryValue[]
+) {
+  await prisma.food_actions.deleteMany({ where: { food_id: id } });
+  const data = actionIds.map(createRelationIdObject_v2(id, 'action_id'));
+  await prisma.food_actions.createMany({ data });
+}
+
 export async function rewriteActions(
   id: number,
   actionIds: FormDataEntryValue[]
@@ -23,6 +42,15 @@ export async function rewriteActions(
   await db
     .insert(schema.foodActions)
     .values(actionIds.map(createRelationIdObject(id, 'actionId')));
+}
+
+export async function rewriteFlavors_v2(
+  id: number,
+  flavorIds: FormDataEntryValue[]
+) {
+  await prisma.food_flavors.deleteMany({ where: { food_id: id } });
+  const data = flavorIds.map(createRelationIdObject_v2(id, 'flavor_id'));
+  await prisma.food_flavors.createMany({ data });
 }
 
 export async function rewriteFlavors(
@@ -38,6 +66,16 @@ export async function rewriteFlavors(
     .values(flavorIds.map(createRelationIdObject(id, 'flavorId')));
 }
 
+export async function rewriteRoutes_v2(
+  id: number,
+  routeIds: FormDataEntryValue[]
+) {
+  await prisma.food_routes.deleteMany({ where: { food_id: id } });
+  const data = routeIds.map(createRelationIdObject_v2(id, 'route_id'));
+
+  prisma.food_routes.createMany({ data });
+}
+
 export async function rewriteRoutes(
   id: number,
   routeIds: FormDataEntryValue[]
@@ -51,7 +89,7 @@ export async function rewriteRoutes(
     .values(routeIds.map(createRelationIdObject(id, 'routeId')));
 }
 
-export async function rewriteItem(
+export async function rewriteItem_v2(
   id: number,
   { temperature, type }: { temperature?: number; type?: number }
 ) {
@@ -64,7 +102,7 @@ export async function rewriteItem(
   });
 }
 
-export async function rewriteItem_v1(
+export async function rewriteItem(
   id: number,
   { temperature, type }: { temperature?: number; type?: number }
 ) {
