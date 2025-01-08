@@ -4,13 +4,19 @@ import { cn } from '../../shared/cn';
 import { SearchBar } from './SearchBar';
 
 function ExtendedSearch() {
+  return (
+    <Wrapper>
+      <Trigger />
+      <SearchBar />
+    </Wrapper>
+  );
   function Wrapper({ children }: { children: Children }) {
     return (
       <div
         class={cn(
-          'has-[.group:checked]:translate-y-0 translate-y-[82%]',
-          'flex flex-col gap-3 overflow-auto',
-          'bg-amber-50 p-4',
+          'has-[.group:checked]:translate-y-0 translate-y-[90%]',
+          'flex flex-col gap-3',
+          'bg-amber-100 p-4',
           'fixed left-0 right-0 w-full h-full transform transition-transform duration-300'
         )}
       >
@@ -21,19 +27,12 @@ function ExtendedSearch() {
 
   function Trigger() {
     return (
-      <label class="flex justify-center w-full absolute -mt-6">
+      <label class="bg-amber-200 flex justify-center w-full absolute -mt-10">
         <input class="group" type="checkbox" hidden />
         <i data-lucide="chevrons-up-down" />
       </label>
     );
   }
-
-  return (
-    <Wrapper>
-      <Trigger />
-      <SearchBar />
-    </Wrapper>
-  );
 }
 
 export function UserView() {

@@ -1,4 +1,3 @@
-import { html } from 'hono/html';
 import { ToggleInput } from '../../components/ToggleInput';
 import {
   getRawActions,
