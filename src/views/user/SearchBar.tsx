@@ -8,7 +8,21 @@ import {
 } from '../../db/queries';
 import { routeConstants } from '../../shared/routes';
 
-export async function SearchBar() {
+export async function SearchBar({
+  searchPhrase,
+  selectedRoutes,
+  selectedActions,
+  selectedFlavors,
+  selectedTypes,
+  selectedTemperatures,
+}: {
+  searchPhrase: string;
+  selectedRoutes: number[];
+  selectedActions: number[];
+  selectedFlavors: number[];
+  selectedTypes: number[];
+  selectedTemperatures: number[];
+}) {
   const routes = await getRawRoutes();
   const actions = await getRawActions();
   const flavors = await getRawFlavors();
@@ -23,6 +37,7 @@ export async function SearchBar() {
           name="query"
           placeholder="Search foods..."
           class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          value={searchPhrase}
         />
       </div>
 
@@ -36,7 +51,7 @@ export async function SearchBar() {
                 name={routeConstants.user.actions}
                 label={action.name}
                 value={action.id}
-                checked={false}
+                checked={selectedActions.includes(action.id)}
               />
             ))}
           </div>
@@ -49,7 +64,7 @@ export async function SearchBar() {
               name={routeConstants.user.temperature}
               label={`${temp.symbol} ${temp.name}`}
               value={temp.id}
-              checked={false}
+              checked={selectedTemperatures.includes(temp.id)}
             />
           ))}
         </details>
@@ -60,7 +75,7 @@ export async function SearchBar() {
               name={routeConstants.user.routes}
               value={route.id}
               label={`(${route.shortName}) ${route.name}`}
-              checked={false}
+              checked={selectedRoutes.includes(route.id)}
             />
           ))}
         </details>
@@ -72,7 +87,7 @@ export async function SearchBar() {
               name={routeConstants.user.routes}
               value={flavor.id}
               label={flavor.name}
-              checked={false}
+              checked={selectedFlavors.includes(flavor.id)}
             />
           ))}
         </details>
@@ -84,7 +99,7 @@ export async function SearchBar() {
               name={routeConstants.user.type}
               value={type.id}
               label={type.name}
-              checked={false}
+              checked={selectedTypes.includes(type.id)}
             />
           ))}
         </details>

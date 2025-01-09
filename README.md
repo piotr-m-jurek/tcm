@@ -1,22 +1,29 @@
 # tcm
 
-## TODO: 
+## TODO:
 
-- [ ] Makefile with scripts for:
-    - purge db and migrations
-    - setup fresh db with all the data
-- [ ] prepare data with relation many-to-one
-- [ ] legend on click
-- [ ] do something with tailwindcss,
- - but avoid the build step
+- [ ] Migrate to Prisma
 
+  - [x] Write seeding the db in prisma
+  - [x] update migrations to get the three one-to-many connections
+
+- [ ] update data via Admin Panel
+- [ ] After configuring all the data (in admin panel) backup and update migration files
+
+- [ ] Legend for different elements
+
+  - [ ] floating button, next to the button with filters
 
 - [ ] (v2) offline access
-- [ ] (v2) authentication 
+- [ ] (v2) authentication
+- [ ] Makefile with scripts for:
+  - purge db and migrations
+  - setup fresh db with all the data
 
-## In progress: 
+## In progress:
 
 ## Done
+
 - [ ] seed data script
 - [x] backup data script
 - [x] user path to user view

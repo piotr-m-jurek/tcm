@@ -7,6 +7,7 @@ import { RootLayout } from './layout';
 export const routes = {
   adminView: '/admin',
   userView: '/',
+  searchView: '/search',
   updateItem: '/api/item/:itemId',
   testingView: '/testing',
   testingViewData: '/testing/data',
@@ -27,6 +28,8 @@ app.post(routes.updateItem, admin.updateItem);
 // ================
 app.post(routes.userView, user.renderUserItems);
 app.get(routes.userView, user.renderUserView);
+
+app.get(routes.searchView, user.renderSearchView);
 
 // ===================
 // ===== TESTING =====
