@@ -1,0 +1,84 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model action {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique(map: "action_name_unique")
+  food_actions food_actions[]
+}
+
+model flavor {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique(map: "flavor_name_unique")
+  symbol       String?        @unique(map: "flavor_symbol_unique")
+  food_flavors food_flavors[]
+}
+
+model food {
+  id             Int            @id @default(autoincrement())
+  name           String
+  type_id        Int?
+  temperature_id Int?
+  temperature    temperature?   @relation(fields: [temperature_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  type           type?          @relation(fields: [type_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  food_actions   food_actions[]
+  food_flavors   food_flavors[]
+  food_routes    food_routes[]
+}
+
+model route {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique(map: "route_name_unique")
+  short_name  String        @unique(map: "route_short_name_unique")
+  food_routes food_routes[]
+}
+
+model temperature {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique(map: "temperature_name_unique")
+  symbol String? @unique(map: "temperature_symbol_unique")
+  food   food[]
+}
+
+model type {
+  id   Int    @id @default(autoincrement())
+  name String @unique(map: "type_name_unique")
+  food food[]
+}
+
+model food_actions {
+  id        Int     @id @default(autoincrement())
+  food_id   Int?
+  action_id Int?
+  action    action? @relation(fields: [action_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  food      food?   @relation(fields: [food_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("food-actions")
+}
+
+model food_flavors {
+  id        Int     @id @default(autoincrement())
+  food_id   Int?
+  flavor_id Int?
+  flavor    flavor? @relation(fields: [flavor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  food      food?   @relation(fields: [food_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("food-flavors")
+}
+
+model food_routes {
+  id       Int    @id @default(autoincrement())
+  route_id Int?
+  food_id  Int?
+  route    route? @relation(fields: [route_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  food     food?  @relation(fields: [food_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("food-routes")
+}
