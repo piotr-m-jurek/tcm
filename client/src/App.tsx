@@ -131,7 +131,7 @@ export function App() {
             <option value="">All routes</option>
             {routesQuery.data?.map((route) => (
               <option value={route.id} key={route.id}>
-                {route.name}
+                {route.short_name}
               </option>
             ))}
           </select>

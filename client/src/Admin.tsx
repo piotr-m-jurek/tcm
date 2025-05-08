@@ -31,7 +31,7 @@ type Food = {
 type Route = { id: number; name: string; short_name: string };
 type Type = { id: number; name: string };
 type Temperature = { id: number; name: string; symbol: string };
-type Action = { id: number; name: string };
+type Action = { id: number; name: string; symbol: string };
 type Flavor = { id: number; name: string; symbol: string };
 
 const tableHeaders = [
@@ -144,18 +144,6 @@ export function AdminPage() {
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: async (id: number) => {
-      const res = await fetch(`${baseUrl}/foods/${id}`, {
-        method: "DELETE",
-      });
-      return res.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["foods"]);
-    },
-  });
-
   function handleEditClick(food: Food) {
     setEditingFood({ ...food });
   }
@@ -166,30 +154,9 @@ export function AdminPage() {
     }
   }
 
-  function handleNewFoodClick() {
-    setNewFood(true);
-    setEditingFood({
-      id: 0,
-      name: "",
-      type_id: typesQuery.data?.[0]?.id || 0,
-      temperature_id: temperaturesQuery.data?.[0]?.id || 0,
-      food_actions: [],
-      food_flavors: [],
-      food_routes: [],
-      temperature: { id: 0, name: "", symbol: "" },
-      type: { id: 0, name: "" },
-    });
-  }
-
   function handleCreateClick() {
     if (editingFood) {
       createMutation.mutate(editingFood as Omit<Food, "id">);
-    }
-  }
-
-  function handleDeleteClick(id: number) {
-    if (confirm("Are you sure you want to delete this food?")) {
-      deleteMutation.mutate(id);
     }
   }
 
@@ -204,7 +171,7 @@ export function AdminPage() {
         <h1 className="text-2xl font-bold">Admin Panel</h1>
         
         {/* Filters */}
-        <div className="flex flex-row gap-2 w-full justify-between sticky top-0 bg-white p-2">
+        <div className="flex flex-row gap-1 w-full justify-start sticky top-0 bg-white p-2 flex-wrap">
           <select
             className="border p-2"
             onChange={(e) => {
@@ -247,7 +214,7 @@ export function AdminPage() {
             <option value="">All routes</option>
             {routesQuery.data?.map((route) => (
               <option value={route.id} key={route.id}>
-                {route.name}
+                {route.name} ({route.short_name})
               </option>
             ))}
           </select>
@@ -262,7 +229,7 @@ export function AdminPage() {
             <option value="">All actions</option>
             {actionsQuery.data?.map((action) => (
               <option value={action.id} key={action.id}>
-                {action.name}
+                {action.name} 
               </option>
             ))}
           </select>
@@ -283,12 +250,6 @@ export function AdminPage() {
           </select>
         </div>
 
-        <button 
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          onClick={handleNewFoodClick}
-        >
-          Add New Food
-        </button>
 
         {/* Edit Form */}
         {editingFood && (
@@ -314,7 +275,7 @@ export function AdminPage() {
                 >
                   {typesQuery.data?.map((type) => (
                     <option value={type.id} key={type.id}>
-                      {type.name}
+                      {type.name} 
                     </option>
                   ))}
                 </select>
@@ -329,7 +290,7 @@ export function AdminPage() {
                 >
                   {temperaturesQuery.data?.map((temp) => (
                     <option value={temp.id} key={temp.id}>
-                      {temp.name}
+                      {temp.name} ({temp.symbol})
                     </option>
                   ))}
                 </select>
@@ -355,7 +316,7 @@ export function AdminPage() {
                 >
                   {routesQuery.data?.map((route) => (
                     <option value={route.id} key={route.id}>
-                      {route.name}
+                      {route.name} ({route.short_name})
                     </option>
                   ))}
                 </select>
@@ -381,7 +342,7 @@ export function AdminPage() {
                 >
                   {actionsQuery.data?.map((action) => (
                     <option value={action.id} key={action.id}>
-                      {action.name}
+                      {action.name} ({action.symbol})
                     </option>
                   ))}
                 </select>
@@ -407,7 +368,7 @@ export function AdminPage() {
                 >
                   {flavorsQuery.data?.map((flavor) => (
                     <option value={flavor.id} key={flavor.id}>
-                      {flavor.name}
+                      {flavor.name} ({flavor.symbol})
                     </option>
                   ))}
                 </select>
@@ -478,7 +439,7 @@ export function AdminPage() {
                       .map(
                         (route) =>
                           routesQuery.data?.find((r) => r.id === route.route_id)
-                            ?.name
+                            ?.short_name
                       )
                       .join(", ")}
                   </td>
@@ -510,12 +471,6 @@ export function AdminPage() {
                         onClick={() => handleEditClick(food)}
                       >
                         Edit
-                      </button>
-                      <button 
-                        className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm"
-                        onClick={() => handleDeleteClick(food.id)}
-                      >
-                        Delete
                       </button>
                     </div>
                   </td>

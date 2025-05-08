@@ -13,7 +13,9 @@ createRoot(document.getElementById('root')!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/admin" element={<AdminPage />} />
+          {import.meta.env.VITE_ENV === "development" && (
+            <Route path="/admin" element={<AdminPage />} />
+          )}
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
