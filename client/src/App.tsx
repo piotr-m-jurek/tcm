@@ -8,7 +8,7 @@ async function fetchData<Type extends unknown[]>(
   rawParams?: Record<string, string>
 ): Promise<Type> {
   const params = Object.entries(rawParams ?? {}).filter(
-    ([_, value]) => value !== ""
+    ([, value]) => value !== ""
   );
   const urlSearchParams = new URLSearchParams(params).toString();
 
