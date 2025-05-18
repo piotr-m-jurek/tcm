@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { useSearchParams } from "react-router";
 
 const baseUrl = "http://localhost:3000/api";
 
@@ -44,128 +45,165 @@ const tableHeaders = [
   "Flavors",
 ] as const;
 
-export function App() {
-  const [type, setType] = useState<number | null>(null);
-  const [temperature, setTemperature] = useState<number | null>(null);
-  const [route, setRoute] = useState<number | null>(null);
-  const [action, setAction] = useState<number | null>(null);
-  const [flavor, setFlavor] = useState<number | null>(null);
+const Filters = ({
+  types,
+  temperatures,
+  routes,
+  actions,
+  flavors,
+}: {
+  types: Type[];
+  temperatures: Temperature[];
+  routes: Route[];
+  actions: Action[];
+  flavors: Flavor[];
+}) => {
+  const [params, setParams] = useSearchParams();
 
-  const routesQuery = useQuery({
-    queryKey: ["routes"],
-    queryFn: () => fetchData<Route[]>("routes"),
-  });
-  const typesQuery = useQuery({
-    queryKey: ["types"],
-    queryFn: () => fetchData<Type[]>("types"),
-  });
-  const temperaturesQuery = useQuery({
-    queryKey: ["temperatures"],
-    queryFn: () => fetchData<Temperature[]>("temperatures"),
-  });
-  const actionsQuery = useQuery({
-    queryKey: ["actions"],
-    queryFn: () => fetchData<Action[]>("actions"),
-  });
-  const flavorsQuery = useQuery({
-    queryKey: ["flavors"],
-    queryFn: () => fetchData<Flavor[]>("flavors"),
-  });
+  const handleFilterChange = (filter: string, value: string) => {
+    setParams((prev) => {
+      if (value === "") {
+        prev.delete(filter);
+      } else {
+        prev.set(filter, value);
+      }
+      return prev;
+    });
+
+  };
+
+  return (
+    <div className="flex flex-row gap-2 w-full justify-between sticky top-0 bg-white p-2">
+      <select
+        className="border p-2"
+        name="type"
+        onChange={(e) => {
+          handleFilterChange(e.target.name, e.target.value);
+        }}
+        value={params.get("type") ?? ""}
+      >
+        <option value="" key="all-types">
+          All types
+        </option>
+        {types.map((type) => (
+          <option value={type.id} key={type.id}>
+            {type.name}
+          </option>
+        ))}
+      </select>
+
+      <select
+        className="border p-2"
+        onChange={(e) => {
+          handleFilterChange(e.target.name, e.target.value);
+        }}
+        value={params.get("temperature") ?? ""}
+      >
+        <option value="">All temperatures</option>
+        {temperatures.map((temperature) => (
+          <option value={temperature.id} key={temperature.id}>
+            {temperature.name}
+          </option>
+        ))}
+      </select>
+
+      <select
+        name="routeIds"
+        className="border p-2"
+        onChange={(e) => {
+          handleFilterChange(e.target.name, e.target.value);
+        }}
+        value={params.get("routeIds") ?? ""}
+      >
+        <option value="">All routes</option>
+        {routes.map((route) => (
+          <option value={route.id} key={route.id}>
+            {route.short_name}
+          </option>
+        ))}
+      </select>
+
+      <select
+        name="actionIds"
+        className="border p-2"
+        onChange={(e) => {
+          handleFilterChange(e.target.name, e.target.value);
+        }}
+        value={params.get("actionIds") ?? ""}
+      >
+        <option value="">All actions</option>
+        {actions.map((action) => (
+          <option value={action.id} key={action.id}>
+            {action.name}
+          </option>
+        ))}
+      </select>
+
+      <select
+        name="flavorIds"
+        className="border p-2"
+        onChange={(e) => {
+          handleFilterChange(e.target.name, e.target.value);
+        }}
+        value={params.get("flavorIds") ?? ""}
+      >
+        <option value="">All flavors</option>
+        {flavors.map((flavor) => (
+          <option value={flavor.id} key={flavor.id}>
+            {flavor.name}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+const getFilters = (params: URLSearchParams) => {
+  const type = params.get("type") ?? null;
+  const temperature = params.get("temperature") ?? null;
+  const routeIds = params.get("routeIds") ?? null;
+  const actionIds = params.get("actionIds") ?? null;
+  const flavorIds = params.get("flavorIds") ?? null;
+  return { type, temperature, routeIds, actionIds, flavorIds };
+};
+
+export function App() {
+  const [params] = useSearchParams();
+  const { type, temperature, routeIds, actionIds, flavorIds } = getFilters(params);
+
+  const { isLoading, isError, data } = useGetIngredients();
 
   const foodsQuery = useQuery({
-    queryKey: ["foods", type, temperature, route, action, flavor],
+    queryKey: ["foods", type, temperature, routeIds, actionIds, flavorIds],
     queryFn: () =>
       fetchData<Food[]>("foods", {
         type: type?.toString() ?? "",
         temperature: temperature?.toString() ?? "",
-        route: route?.toString() ?? "",
-        action: action?.toString() ?? "",
-        flavor: flavor?.toString() ?? "",
+        routeIds: routeIds?.toString() ?? "",
+        actionIds: actionIds?.toString() ?? "",
+        flavorIds: flavorIds?.toString() ?? "",
       }),
   });
-  // For compatibility with existing code
+
+  if (foodsQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isLoading || isError ||foodsQuery.isError) {
+    return <div>Tell Piotr that the app is not working</div>;
+  }
 
   return (
     <div className="flex flex-col gap-4 flex-wrap bg-gray-100 size-full">
       <div className="flex flex-row gap-4 flex-wrap max-w-screen-lg mx-auto p-4 bg-white rounded-lg shadow-md my-4">
         {/* Filters */}
-        <div className="flex flex-row gap-2 w-full justify-between sticky top-0 bg-white p-2">
-          <select
-            className="border p-2"
-            onChange={(e) => {
-              setType(Number(e.target.value));
-            }}
-            value={type ?? ""}
-          >
-            <option value="" key="all-types">
-              All types
-            </option>
-            {typesQuery.data?.map((type) => (
-              <option value={type.id} key={type.id}>
-                {type.name}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className="border p-2"
-            onChange={(e) => {
-              setTemperature(Number(e.target.value));
-            }}
-            value={temperature ?? ""}
-          >
-            <option value="">All temperatures</option>
-            {temperaturesQuery.data?.map((temperature) => (
-              <option value={temperature.id} key={temperature.id}>
-                {temperature.name}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className="border p-2"
-            onChange={(e) => {
-              setRoute(Number(e.target.value));
-            }}
-          >
-            <option value="">All routes</option>
-            {routesQuery.data?.map((route) => (
-              <option value={route.id} key={route.id}>
-                {route.short_name}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className="border p-2"
-            onChange={(e) => {
-              setAction(Number(e.target.value));
-            }}
-            value={action ?? ""}
-          >
-            <option value="">All actions</option>
-            {actionsQuery.data?.map((action) => (
-              <option value={action.id} key={action.id}>
-                {action.name}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className="border p-2"
-            onChange={(e) => {
-              setFlavor(Number(e.target.value));
-            }}
-            value={flavor ?? ""}
-          >
-            <option value="">All flavors</option>
-            {flavorsQuery.data?.map((flavor) => (
-              <option value={flavor.id} key={flavor.id}>
-                {flavor.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Filters
+          types={data?.types ?? []}
+          temperatures={data?.temperatures ?? []}
+          routes={data?.routes ?? []}
+          actions={data?.actions ?? []}
+          flavors={data?.flavors ?? []}
+        />
 
         {/* Table */}
         <table className="w-full border-collapse">
@@ -204,8 +242,8 @@ export function App() {
                     {food.food_routes
                       .map(
                         (route) =>
-                          routesQuery.data?.find((r) => r.id === route.route_id)
-                            ?.name
+                          data?.routes?.find((r) => r.id === route.route_id)
+                            ?.short_name
                       )
                       .join(", ")}
                   </td>
@@ -214,20 +252,19 @@ export function App() {
                     {food.food_actions
                       .map(
                         (action) =>
-                          actionsQuery.data?.find(
-                            (a) => a.id === action.action_id
-                          )?.name
+                          data?.actions?.find((a) => a.id === action.action_id)
+                            ?.name
                       )
                       .join(", ")}
                   </td>
                   <td className="border p-2">
                     {food.food_flavors
-                      .map(
-                        (flavor) =>
-                          flavorsQuery.data?.find(
-                            (f) => f.id === flavor.flavor_id
-                          )?.name
-                      )
+                      .map((flavor) => {
+                        const found = data?.flavors?.find(
+                          (f) => f.id === flavor.flavor_id
+                        );
+                        return `${found?.name} (${found?.symbol})`;
+                      })
                       .join(", ")}
                   </td>
                 </tr>
@@ -237,4 +274,51 @@ export function App() {
       </div>
     </div>
   );
+}
+
+
+function useGetIngredients() {
+  const routesQuery = useQuery({
+    queryKey: ["routes"],
+    queryFn: () => fetchData<Route[]>("routes"),
+  });
+  const typesQuery = useQuery({
+    queryKey: ["types"],
+    queryFn: () => fetchData<Type[]>("types"),
+  });
+  const temperaturesQuery = useQuery({
+    queryKey: ["temperatures"],
+    queryFn: () => fetchData<Temperature[]>("temperatures"),
+  });
+  const actionsQuery = useQuery({
+    queryKey: ["actions"],
+    queryFn: () => fetchData<Action[]>("actions"),
+  });
+  const flavorsQuery = useQuery({
+    queryKey: ["flavors"],
+    queryFn: () => fetchData<Flavor[]>("flavors"),
+  });
+
+return {
+  isLoading:
+    routesQuery.isLoading ||
+    typesQuery.isLoading ||
+    temperaturesQuery.isLoading ||
+    actionsQuery.isLoading ||
+    flavorsQuery.isLoading,
+  isError:
+    routesQuery.isError ||
+    typesQuery.isError ||
+    temperaturesQuery.isError ||
+    actionsQuery.isError ||
+    flavorsQuery.isError,
+  data: {
+    routes: routesQuery.data,
+    types: typesQuery.data,
+    temperatures: temperaturesQuery.data,
+    actions: actionsQuery.data,
+    flavors: flavorsQuery.data,
+  },
+};
+
 }

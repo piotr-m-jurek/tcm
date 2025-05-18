@@ -13,11 +13,11 @@ client:
 
 # Run the server with Bun
 server:
-	bun run dev
+	cd server &&bun run dev
 
 # Run both client and server concurrently
 dev:
-	(cd client && npm run dev) & (bun run dev) & wait
+	(cd client && npm run dev) & (cd server && bun run dev) & wait
 
 # Clean up
 clean:
