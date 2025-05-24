@@ -4,6 +4,7 @@ import { App } from './App.tsx'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { AdminPage } from './Admin.tsx'
+import { isAdmin } from './lib.ts'
 
 const queryClient = new QueryClient()
 
@@ -13,7 +14,7 @@ createRoot(document.getElementById('root')!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
-          {import.meta.env.VITE_ENV === "development" && (
+          {isAdmin() && (
             <Route path="/admin" element={<AdminPage />} />
           )}
         </Routes>
