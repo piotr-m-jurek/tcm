@@ -2,11 +2,11 @@ import { useSearchParams } from "react-router";
 import type { Route, Flavor, Temperature, Type, Action } from "../types";
 
 export const getFiltersObject = (params: URLSearchParams) => {
-  const type = params.get("type") ?? null;
-  const temperature = params.get("temperature") ?? null;
-  const routeIds = params.get("routeIds") ?? null;
-  const actionIds = params.get("actionIds") ?? null;
-  const flavorIds = params.get("flavorIds") ?? null;
+  const type = params.get("type") ?? undefined;
+  const temperature = params.get("temperature") ?? undefined;
+  const routeIds = params.get("routeIds") ?? undefined;
+  const actionIds = params.get("actionIds") ?? undefined;
+  const flavorIds = params.get("flavorIds") ?? undefined;
   return { type, temperature, routeIds, actionIds, flavorIds };
 };
 
@@ -34,7 +34,6 @@ export const Filters = ({
       }
       return prev;
     });
-
   };
 
   return (
@@ -67,7 +66,7 @@ export const Filters = ({
         onChange={(value) => handleFilterChange("actionIds", value)}
       />
 
-	  <FilterSelect
+      <FilterSelect
         name="flavorIds"
         options={flavors}
         value={params.get("flavorIds") ?? ""}
@@ -76,7 +75,6 @@ export const Filters = ({
     </div>
   );
 };
-
 
 const FilterSelect = ({
   name,
@@ -94,7 +92,7 @@ const FilterSelect = ({
       name={name}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-	  className="border p-2 w-full sm:w-auto"
+      className="border p-2 w-full sm:w-auto"
     >
       <option value="">All {name}</option>
       {options.map((option) => (
