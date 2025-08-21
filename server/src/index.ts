@@ -1,6 +1,5 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import { RootLayout } from './layout';
 import {
   deleteItem_v2,
   getItem_v2,
@@ -13,21 +12,15 @@ import {
 } from './db/queries';
 import { createItem_v2, updateItem_v2 } from './db/writes';
 import { z } from 'zod';
-
-export const routes = {
-  food: '/api/food/:foodId',
-  adminView: '/admin',
-  userView: '/',
-  searchView: '/search',
-  updateItem: '/api/item/:itemId',
-  filteredItems: '/items',
-  testingView: '/testing',
-  testingViewData: '/testing/data',
-} as const;
+import { serveStatic } from 'hono/bun';
+import { logger } from 'hono/logger';
 
 const app = new Hono();
 
-app.use('*', RootLayout);
+app.use('*', logger());
+app.use('*', serveStatic({ root: '../client/dist' }));
+app.use('/', serveStatic({ root: '../client/dist', path: '/index.html' }));
+
 app.use('*', cors());
 // =================
 // ===== API =====
