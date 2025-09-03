@@ -1,16 +1,33 @@
-// TODO: make this file shareable between client and server
 
 export type Food = {
   id: number;
   name: string;
   type_id: number;
   temperature_id: number;
-  food_actions: { id: number; food_id: number; action_id: number }[];
-  food_flavors: { id: number; food_id: number; flavor_id: number }[];
-  food_routes: { id: number; route_id: number; food_id: number }[];
-  temperature: { id: number; name: string; symbol: string };
-  type: { id: number; name: string };
+  food_action_ids: number[];
+  food_flavor_ids: number[];
+  food_route_ids: number[];
 };
+
+export type UpdateFoodPayload = {
+  id: number;
+  name: string;
+  type_id: number;
+  temperature_id: number;
+  food_action_ids: number[];
+  food_flavor_ids: number[];
+  food_route_ids: number[];
+}
+
+export type CreateFoodPayload = {
+  name: string;
+  temperature_id: number;
+  type_id: number; 
+  food_action_ids: number[]
+  food_flavor_ids: number[];
+  food_route_ids: number[];
+}
+
 
 export type Route = { id: number; name: string; short_name: string };
 export type Type = { id: number; name: string };

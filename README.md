@@ -2,8 +2,10 @@
 
 ## TODO:
 
-- server
+- [ ] make types shareable between server and client
 
+- server
+  - [ ] move to effect.ts
   - [ ] save db state to csv
 
 - client

@@ -1,14 +1,14 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import {
-  deleteItem_v2,
-  getItem_v2,
-  getItems_v2,
-  getRawActions_v2,
-  getRawFlavors_v2,
-  getRawRoutes_v2,
-  getRawTemperatures_v2,
-  getRawTypes_v2,
+  deleteItem,
+  getItem,
+  getItems,
+  getRawActions,
+  getRawFlavors,
+  getRawRoutes,
+  getRawTemperatures,
+  getRawTypes,
 } from './db/queries';
 import { createItem_v2, updateItem_v2 } from './db/writes';
 import { z } from 'zod';
@@ -34,7 +34,7 @@ app.get('/api/foods', async (c) => {
   const actionIds = c.req.query('actionIds');
   const flavorIds = c.req.query('flavorIds');
   const routeIds = c.req.query('routeIds');
-  const foods = await getItems_v2({
+  const foods = await getItems({
     name,
     temperature: temperature ? Number(temperature) : undefined,
     type: type ? Number(type) : undefined,
@@ -42,7 +42,18 @@ app.get('/api/foods', async (c) => {
     flavorIds: flavorIds?.split(',').map((x) => Number(x)) ?? [],
     routeIds: routeIds?.split(',').map((x) => Number(x)) ?? [],
   });
-  return c.json(foods);
+
+  const prepared = foods.map((food) => ({
+    id: food.id,
+    name: food.name,
+    temperature_id: food.temperature_id,
+    type_id: food.type_id,
+    food_action_ids: food.food_actions.map((action) => action.action_id),
+    food_flavor_ids: food.food_flavors.map((flavor) => flavor.flavor_id),
+    food_route_ids: food.food_routes.map((route) => route.route_id),
+  }));
+
+  return c.json(prepared);
 });
 
 /**
@@ -54,12 +65,22 @@ app.get('/api/foods/:foodId', async (c) => {
     // TODO: Better error handling
     return c.json({ error: 'Invalid food ID' }, 400);
   }
-  const food = await getItem_v2(foodId);
+  const food = await getItem(foodId);
 
   if (!food) {
     return c.json({ error: 'Food not found' }, 404);
   }
-  return c.json(food);
+
+  const prepared = {
+    id: food.id,
+    name: food.name,
+    temperature_id: food.temperature_id,
+    type_id: food.type_id,
+    food_action_ids: food.food_actions.map((action) => action.action_id),
+    food_flavor_ids: food.food_flavors.map((flavor) => flavor.flavor_id),
+    food_route_ids: food.food_routes.map((route) => route.route_id),
+  };
+  return c.json(prepared);
 });
 
 /**
@@ -124,7 +145,7 @@ app.delete('/api/foods/:foodId', async (c) => {
   if (isNaN(foodId)) {
     return c.json({ error: 'Invalid food ID' }, 400);
   }
-  const result = await deleteItem_v2(foodId);
+  const result = await deleteItem(foodId);
   if ('error' in result) {
     return c.json({ error: result.error }, 400);
   }
@@ -132,27 +153,27 @@ app.delete('/api/foods/:foodId', async (c) => {
 });
 
 app.get('/api/routes', async (c) => {
-  const routes = await getRawRoutes_v2();
+  const routes = await getRawRoutes();
   return c.json(routes);
 });
 
 app.get('/api/types', async (c) => {
-  const types = await getRawTypes_v2();
+  const types = await getRawTypes();
   return c.json(types);
 });
 
 app.get('/api/temperatures', async (c) => {
-  const temperatures = await getRawTemperatures_v2();
+  const temperatures = await getRawTemperatures();
   return c.json(temperatures);
 });
 
 app.get('/api/actions', async (c) => {
-  const actions = await getRawActions_v2();
+  const actions = await getRawActions();
   return c.json(actions);
 });
 
 app.get('/api/flavors', async (c) => {
-  const flavors = await getRawFlavors_v2();
+  const flavors = await getRawFlavors();
   return c.json(flavors);
 });
 

@@ -1,7 +1,5 @@
-import { eq } from 'drizzle-orm';
-import * as schema from '../../db/schema';
-import { db, prisma } from '.';
-import { getItem_v2 } from './queries';
+import { prisma } from '.';
+import { getItem } from './queries';
 
 function createRelationIdObject_v2(
   objectId: number,
@@ -104,59 +102,5 @@ export async function updateItem_v2(
   await updateFlavors_v2(id, flavorIds);
   await updateRoutes_v2(id, routeIds);
 
-  return getItem_v2(id);
-}
-
-// ================
-// ==== OLD API====
-// ================
-
-function createRelationIdObject(
-  objectId: number,
-  columnName: 'routeId' | 'actionId' | 'flavorId'
-) {
-  return (relationId: number) => ({
-    foodId: objectId,
-    [columnName]: relationId,
-  });
-}
-
-export async function rewriteItem(
-  id: number,
-  { temperature, type }: { temperature?: number; type?: number }
-) {
-  await db
-    .update(schema.foodList)
-    .set({ temperature, type })
-    .where(eq(schema.foodList.id, id));
-}
-
-export async function rewriteActions(id: number, actionIds: number[]) {
-  await db.delete(schema.foodActions).where(eq(schema.foodActions.foodId, id));
-  if (actionIds.length <= 0) {
-    return;
-  }
-  await db
-    .insert(schema.foodActions)
-    .values(actionIds.map(createRelationIdObject(id, 'actionId')));
-}
-
-export async function rewriteRoutes(id: number, routeIds: number[]) {
-  await db.delete(schema.foodRoutes).where(eq(schema.foodRoutes.foodId, id));
-  if (routeIds.length <= 0) {
-    return;
-  }
-  await db
-    .insert(schema.foodRoutes)
-    .values(routeIds.map(createRelationIdObject(id, 'routeId')));
-}
-
-export async function rewriteFlavors(id: number, flavorIds: number[]) {
-  await db.delete(schema.foodFlavors).where(eq(schema.foodFlavors.foodId, id));
-  if (flavorIds.length <= 0) {
-    return;
-  }
-  await db
-    .insert(schema.foodFlavors)
-    .values(flavorIds.map(createRelationIdObject(id, 'flavorId')));
+  return getItem(id);
 }

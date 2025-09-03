@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router";
-import { Filters, getFiltersObject } from "./components/Filters";
-import type { Food } from "./types";
-import { Layout } from "./components/Layout";
-import { fetchData } from "./lib";
-import { useGetIngredients } from "./useGetIngredients";
+import { Filters, getFiltersObject } from "../components/Filters";
+import type { Food } from "../types";
+import { Layout } from "../components/Layout";
+import { fetchData } from "../lib";
+import { useGetIngredients } from "../useGetIngredients";
 
 const tableHeaders = [
   "Name",
@@ -19,7 +19,7 @@ export function App() {
   const [searchParams] = useSearchParams();
   const params = getFiltersObject(searchParams);
 
-  const { isLoading, isError, data } = useGetIngredients();
+  const { isLoading, isError, data, ...rest } = useGetIngredients();
 
   const foodsQuery = useQuery({
     queryKey: ["foods", params],
@@ -31,6 +31,7 @@ export function App() {
   }
 
   if (isLoading || isError || foodsQuery.isError) {
+    console.log(isLoading, isError, rest, foodsQuery.isError, foodsQuery.error);
     return <div>Tell Piotr that the app is not working</div>;
   }
 
@@ -78,32 +79,38 @@ export function App() {
                   foodsQuery.data?.map((food) => (
                     <tr key={food.id}>
                       <td className="border p-2">{food.name}</td>
-                      <td className="border p-2">{food.temperature.name}</td>
                       <td className="border p-2">
-                        {food.food_routes
+                        {data?.temperatures?.find(
+                          (t) => t.id === food.temperature_id
+                        )?.name ?? "undefined temperature"}
+                      </td>
+                      <td className="border p-2">
+                        {food.food_route_ids
                           .map(
-                            (route) =>
-                              data?.routes?.find((r) => r.id === route.route_id)
+                            (route_id) =>
+                              data?.routes?.find((r) => r.id === route_id)
                                 ?.short_name
                           )
                           .join(", ")}
                       </td>
-                      <td className="border p-2">{food.type.name}</td>
                       <td className="border p-2">
-                        {food.food_actions
+                        {data?.types?.find((t) => t.id === food.type_id)
+                          ?.name ?? "undefined type"}
+                      </td>
+                      <td className="border p-2">
+                        {food.food_action_ids
                           .map(
-                            (action) =>
-                              data?.actions?.find(
-                                (a) => a.id === action.action_id
-                              )?.name
+                            (action_id) =>
+                              data?.actions?.find((a) => a.id === action_id)
+                                ?.name ?? "undefined action"
                           )
                           .join(", ")}
                       </td>
                       <td className="border p-2">
-                        {food.food_flavors
-                          .map((flavor) => {
+                        {food.food_flavor_ids
+                          .map((flavor_id) => {
                             const found = data?.flavors?.find(
-                              (f) => f.id === flavor.flavor_id
+                              (f) => f.id === flavor_id
                             );
                             return `${found?.name} (${found?.symbol})`;
                           })
