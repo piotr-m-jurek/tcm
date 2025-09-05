@@ -50,15 +50,7 @@ export function App() {
               },
               ({ data }) => {
                 console.log(data);
-                return (
-                  <Filters
-                    types={data.types ?? []}
-                    temperatures={data?.temperatures ?? []}
-                    routes={data?.routes ?? []}
-                    actions={data?.actions ?? []}
-                    flavors={data?.flavors ?? []}
-                  />
-                );
+                return <Filters data={data} />;
               }
             )
             .otherwise((things) => {
