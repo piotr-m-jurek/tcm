@@ -1,8 +1,3 @@
-import type { CreateFoodPayload, Food } from "./types";
-
-export const isAdmin = () => {
-  return import.meta.env.VITE_ENV === "development";
-};
 
 export const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
@@ -35,16 +30,4 @@ export async function postData<Type extends unknown[]>(
 ): Promise<Type> {
   const res = await fetch(`${baseUrl}/${url}`, { method: "POST", body, });
   return res.json();
-}
-
-export function foodToFormData (food: CreateFoodPayload) {
-  const formData = new FormData();
-
-  formData.append("name", food.name);
-  formData.append("temperature", food.temperature_id.toString());
-  formData.append("type", food.type_id.toString());
-  formData.append("actionIds", food.food_action_ids.join(","));
-  formData.append("flavorIds", food.food_flavor_ids.join(","));
-  formData.append("routeIds", food.food_route_ids.join(","));
-  return formData
 }

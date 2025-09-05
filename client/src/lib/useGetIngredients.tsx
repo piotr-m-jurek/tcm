@@ -1,7 +1,7 @@
 import type { Flavor, Temperature, Type, Route, Action } from "./types";
 
 import { useQuery } from "react-query";
-import { fetchData } from "./lib";
+import { fetchData } from "./request";
 
 export function useGetIngredients() {
   const routesQuery = useQuery({

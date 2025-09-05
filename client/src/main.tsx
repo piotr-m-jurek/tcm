@@ -1,31 +1,28 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes } from 'react-router'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import ReactDOM from 'react-dom/client';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-import { App } from './views/App.tsx'
-import { AdminPage } from './views/Admin.tsx'
-import { isAdmin } from './lib.ts'
-import './styles.css'
+import { App } from './views/App.tsx';
+import { AdminPage } from './views/Admin.tsx';
+import { isAdmin } from './lib/index.ts';
+import './styles.css';
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
-function Main () {
+function Main() {
   return (
-    <StrictMode>
+    <React.StrictMode>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<App />} />
-            {isAdmin() && 
-              (<Route path="/admin" element={<AdminPage />} />)
-            }
+            {isAdmin() && <Route path="/admin" element={<AdminPage />} />}
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
-    </StrictMode>
-  )
+    </React.StrictMode>
+  );
 }
 
-
-createRoot(document.getElementById('root')!).render(<Main />)
+ReactDOM.createRoot(document.getElementById('root')!).render(<Main />);

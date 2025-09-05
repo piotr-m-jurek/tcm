@@ -2,9 +2,14 @@
 
 ## TODO:
 
+- [ ] when share prepare a list of ingredients
 - [ ] make types shareable between server and client
+- [ ] multiselect doesn't have selected indicator
+- [ ] lists don't scroll
+- [ ] toast for successfull actions
 
 - server
+
   - [ ] move to effect.ts
   - [ ] save db state to csv
 

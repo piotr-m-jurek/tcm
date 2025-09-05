@@ -1,13 +1,13 @@
-import { useSearchParams } from "react-router";
-import type { Route, Flavor, Temperature, Type, Action } from "../types";
-import { useState } from "react";
+import { useSearchParams } from 'react-router';
+import type { Route, Flavor, Temperature, Type, Action } from '../lib/types';
+import { useState } from 'react';
 
 export const getFiltersObject = (params: URLSearchParams) => {
-  const type = params.get("type") ?? undefined;
-  const temperature = params.get("temperature") ?? undefined;
-  const routeIds = params.get("routeIds") ?? undefined;
-  const actionIds = params.get("actionIds") ?? undefined;
-  const flavorIds = params.get("flavorIds") ?? undefined;
+  const type = params.get('type') ?? undefined;
+  const temperature = params.get('temperature') ?? undefined;
+  const routeIds = params.get('routeIds') ?? undefined;
+  const actionIds = params.get('actionIds') ?? undefined;
+  const flavorIds = params.get('flavorIds') ?? undefined;
   return { type, temperature, routeIds, actionIds, flavorIds };
 };
 
@@ -29,7 +29,7 @@ export const Filters = ({
 
   const handleFilterChange = (filter: string, value: string) => {
     setParams((prev) => {
-      if (value === "") {
+      if (value === '') {
         prev.delete(filter);
       } else {
         prev.set(filter, value);
@@ -42,42 +42,42 @@ export const Filters = ({
     <div className="flex flex-col gap-2">
       <div
         className={`flex flex-col sm:flex-row w-full sm:justify-between sticky top-0 bg-white flex-wrap overflow-hidden ${
-          open ? "h-auto" : "h-0"
+          open ? 'h-auto' : 'h-0'
         }`}
       >
         <FilterSelect
           name="type"
           options={types ?? []}
-          value={params.get("type") ?? ""}
-          onChange={(value) => handleFilterChange("type", value)}
+          value={params.get('type') ?? ''}
+          onChange={(value) => handleFilterChange('type', value)}
         />
 
         <FilterSelect
           name="temperature"
           options={temperatures ?? []}
-          value={params.get("temperature") ?? ""}
-          onChange={(value) => handleFilterChange("temperature", value)}
+          value={params.get('temperature') ?? ''}
+          onChange={(value) => handleFilterChange('temperature', value)}
         />
 
         <FilterSelect
           name="routeIds"
           options={routes ?? []}
-          value={params.get("routeIds") ?? ""}
-          onChange={(value) => handleFilterChange("routeIds", value)}
+          value={params.get('routeIds') ?? ''}
+          onChange={(value) => handleFilterChange('routeIds', value)}
         />
 
         <FilterSelect
           name="actionIds"
           options={actions ?? []}
-          value={params.get("actionIds") ?? ""}
-          onChange={(value) => handleFilterChange("actionIds", value)}
+          value={params.get('actionIds') ?? ''}
+          onChange={(value) => handleFilterChange('actionIds', value)}
         />
 
         <FilterSelect
           name="flavorIds"
           options={flavors ?? []}
-          value={params.get("flavorIds") ?? ""}
-          onChange={(value) => handleFilterChange("flavorIds", value)}
+          value={params.get('flavorIds') ?? ''}
+          onChange={(value) => handleFilterChange('flavorIds', value)}
         />
       </div>
 
