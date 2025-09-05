@@ -18,6 +18,7 @@ import {
 } from 'react-hook-form';
 import { ChevronDownIcon, ChevronUpIcon } from './Icons';
 import { match } from 'ts-pattern';
+import { cn } from '@/lib/utils';
 
 export const getFiltersObject = (params: URLSearchParams) => {
   const type = params.get('type') ?? undefined;
@@ -49,16 +50,13 @@ function parseParams(params: URLSearchParams): Filters {
 function serializeParams(filters: Filters): URLSearchParams {
   const newParams = new URLSearchParams();
 
-  Object.entries(filters)
-    .filter(([_, value]) => value.length > 0)
-    .forEach(([key, value]) => {
-      if (value.length === 0) {
-        return;
-      }
-      newParams.set(key, value.join(','));
-    });
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value.length === 0) {
+      return;
+    }
+    newParams.set(key, value.join(','));
+  });
 
-  console.log('new params', newParams);
   return newParams;
 }
 
@@ -70,13 +68,7 @@ export const Filters = ({
   const [params, setParams] = useSearchParams();
   const [open, setOpen] = useState(false);
 
-  const defaultValues = parseParams(
-    new URLSearchParams(window.location.search)
-  );
-  console.log('default values', defaultValues);
-  const form = useForm<Filters>({
-    defaultValues: defaultValues,
-  });
+  const form = useForm<Filters>({ defaultValues: parseParams(params) });
 
   const onSubmit = (data: Filters) =>
     setParams(serializeParams(data), { replace: true });
@@ -87,15 +79,17 @@ export const Filters = ({
         className="cursor-pointer flex items-center justify-center gap-2"
         onClick={() => setOpen((prev) => !prev)}
       >
+        Filters
         {match(open)
           .with(true, () => <ChevronUpIcon />)
           .with(false, () => <ChevronDownIcon />)
           .exhaustive()}
       </div>
       <div
-        className={`w-full sm:justify-between sticky top-0 bg-white overflow-hidden ${
+        className={cn(
+          'w-full sm:justify-between sticky top-0 bg-white overflow-hidden',
           open ? 'h-auto' : 'h-0'
-        }`}
+        )}
       >
         <Form {...form}>
           <form
