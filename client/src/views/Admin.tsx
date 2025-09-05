@@ -95,15 +95,14 @@ export function AdminPage() {
     setMode({ type: 'view' });
   }
 
-  function handleSubmitCreate() {
+  function handleFoodFormSubmit() {
     if (mode.type === 'create') {
       createMutation.mutate(mode.food);
+      return;
     }
-  }
-
-  function handleSaveClick() {
     if (mode.type === 'update') {
       updateMutation.mutate(mode.food);
+      return;
     }
   }
 
@@ -129,7 +128,7 @@ export function AdminPage() {
                     mode={mode}
                     data={data}
                     onCancel={handleCancelClick}
-                    onSubmit={handleSaveClick}
+                    onSubmit={handleFoodFormSubmit}
                   />
                 </DialogContent>
               </Dialog>

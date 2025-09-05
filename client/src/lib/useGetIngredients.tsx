@@ -1,32 +1,32 @@
-import type { Flavor, Temperature, Type, Route, Action } from "./types";
+import type { Flavor, Temperature, Type, Route, Action } from './types';
 
-import { useQuery } from "react-query";
-import { fetchData } from "./request";
+import { useQuery } from 'react-query';
+import { fetchData } from './request';
 
 export function useGetIngredients() {
   const routesQuery = useQuery({
-    queryKey: ["routes"],
-    queryFn: () => fetchData<Route[]>("routes"),
+    queryKey: ['routes'],
+    queryFn: () => fetchData<Route[]>('routes'),
   });
 
   const typesQuery = useQuery({
-    queryKey: ["types"],
-    queryFn: () => fetchData<Type[]>("types"),
+    queryKey: ['types'],
+    queryFn: () => fetchData<Type[]>('types'),
   });
 
   const temperaturesQuery = useQuery({
-    queryKey: ["temperatures"],
-    queryFn: () => fetchData<Temperature[]>("temperatures"),
+    queryKey: ['temperatures'],
+    queryFn: () => fetchData<Temperature[]>('temperatures'),
   });
 
   const actionsQuery = useQuery({
-    queryKey: ["actions"],
-    queryFn: () => fetchData<Action[]>("actions"),
+    queryKey: ['actions'],
+    queryFn: () => fetchData<Action[]>('actions'),
   });
 
   const flavorsQuery = useQuery({
-    queryKey: ["flavors"],
-    queryFn: () => fetchData<Flavor[]>("flavors"),
+    queryKey: ['flavors'],
+    queryFn: () => fetchData<Flavor[]>('flavors'),
   });
 
   return {
