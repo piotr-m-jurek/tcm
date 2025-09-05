@@ -19,6 +19,12 @@ import {
 import { ChevronDownIcon, ChevronUpIcon } from './Icons';
 import { match } from 'ts-pattern';
 import { cn } from '@/lib/utils';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTrigger,
+} from './ui/drawer';
 
 export const getFiltersObject = (params: URLSearchParams) => {
   const type = params.get('type') ?? undefined;
@@ -74,27 +80,20 @@ export const Filters = ({
     setParams(serializeParams(data), { replace: true });
 
   return (
-    <>
-      <div
-        className="cursor-pointer flex items-center justify-center gap-2"
-        onClick={() => setOpen((prev) => !prev)}
-      >
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger className="cursor-pointer flex items-center justify-center gap-2">
         Filters
         {match(open)
-          .with(true, () => <ChevronUpIcon />)
-          .with(false, () => <ChevronDownIcon />)
+          .with(false, () => <ChevronUpIcon />)
+          .with(true, () => <ChevronDownIcon />)
           .exhaustive()}
-      </div>
-      <div
-        className={cn(
-          'w-full sm:justify-between sticky top-0 bg-white overflow-hidden',
-          open ? 'h-auto' : 'h-0'
-        )}
-      >
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>Filters</DrawerHeader>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-row gap-2"
+            className="flex flex-col gap-2 p-4"
           >
             <FilterMultiSelect
               form={form}
@@ -133,8 +132,8 @@ export const Filters = ({
             />
           </form>
         </Form>
-      </div>
-    </>
+      </DrawerContent>
+    </Drawer>
   );
 };
 
@@ -169,7 +168,7 @@ function FilterMultiSelect<
             defaultValues={field.value}
           >
             <FormControl>
-              <MultiSelectTrigger>
+              <MultiSelectTrigger className="w-full">
                 <MultiSelectValue placeholder={`Select ${label}...`} />
               </MultiSelectTrigger>
             </FormControl>
