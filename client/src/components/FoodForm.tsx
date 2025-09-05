@@ -1,12 +1,4 @@
-import type {
-  Action,
-  CreateFoodPayload,
-  Flavor,
-  Food,
-  Route,
-  Temperature,
-  Type,
-} from '@/lib/types';
+import type { CreateFoodPayload, Food } from '@/lib/types';
 import {
   Form,
   FormControl,
@@ -34,25 +26,18 @@ import {
 import { match } from 'ts-pattern';
 import { Button } from './ui/button';
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import type { useGetIngredients } from '@/lib/useGetIngredients';
 
 export function FoodForm({
   mode,
-  routes,
-  types,
-  flavors,
-  temperatures,
-  actions,
+  data: { routes, types, flavors, temperatures, actions },
   onCancel,
   onSubmit,
 }: {
   mode:
     | { type: 'create'; food: CreateFoodPayload }
     | { type: 'update'; food: Food };
-  routes: Route[];
-  flavors: Flavor[];
-  types: Type[];
-  actions: Action[];
-  temperatures: Temperature[];
+  data: ReturnType<typeof useGetIngredients>['data'];
   onCancel: () => void;
   onSubmit: () => void;
 }) {

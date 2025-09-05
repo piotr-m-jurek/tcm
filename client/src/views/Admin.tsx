@@ -4,25 +4,25 @@ import { Layout } from '../components/Layout';
 import { fetchData, patchData, postData } from '../lib/request';
 import { useGetIngredients } from '../lib/useGetIngredients';
 import { Filters, getFiltersObject } from '../components/Filters';
-import {
-  type Action,
-  type CreateFoodPayload,
-  type Flavor,
-  type Food,
-  type Route,
-  type Temperature,
-  type Type,
-} from '../lib/types';
+import { type CreateFoodPayload, type Food } from '../lib/types';
 import { useSearchParams } from 'react-router';
 import { match, P } from 'ts-pattern';
 import {
+  foodToFormData,
   getFoodActionNameById,
   getFoodFlavorNameById,
   getFoodRouteNameById,
+  getFoodTypeNameById,
+  getTemperatureNameById,
 } from '../lib';
 import { FoodForm } from '@/components/FoodForm';
-import React from 'react';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogHeader,
+} from '@/components/ui/dialog';
 
 const emptyFood: CreateFoodPayload = {
   name: '',
@@ -63,20 +63,7 @@ export function AdminPage() {
 
   const updateMutation = useMutation({
     mutationFn: async (food: Food) => {
-      const formData = new FormData();
-      formData.append('name', food.name);
-      formData.append('temperature', food.temperature_id.toString());
-      formData.append('type', food.type_id.toString());
-
-      const actionIds = food.food_action_ids.join(',');
-      formData.append('actionIds', actionIds);
-
-      const flavorIds = food.food_flavor_ids.join(',');
-      formData.append('flavorIds', flavorIds);
-
-      const routeIds = food.food_route_ids.join(',');
-      formData.append('routeIds', routeIds);
-
+      const formData = foodToFormData(food);
       return patchData(`foods/${food.id}`, formData);
     },
     onSuccess: () => {
@@ -87,20 +74,7 @@ export function AdminPage() {
 
   const createMutation = useMutation({
     mutationFn: async (food: CreateFoodPayload) => {
-      const formData = new FormData();
-      formData.append('name', food.name);
-      formData.append('temperature', food.temperature_id.toString());
-      formData.append('type', food.type_id.toString());
-
-      const actionIds = food.food_action_ids.join(',');
-      formData.append('actionIds', actionIds);
-
-      const flavorIds = food.food_flavor_ids.join(',');
-      formData.append('flavorIds', flavorIds);
-
-      const routeIds = food.food_route_ids.join(',');
-      formData.append('routeIds', routeIds);
-
+      const formData = foodToFormData(food);
       return postData('foods', formData);
     },
     onSuccess: () => {
@@ -137,27 +111,27 @@ export function AdminPage() {
     <Layout>
       <div className="flex flex-col gap-4 flex-wrap bg-gray-100 h-full overflow-y-auto">
         <div className="flex flex-col gap-4 flex-wrap max-w-screen-lg mx-auto p-4 bg-white rounded-lg shadow-md my-4">
-          <Filters {...data} />
+          <Filters data={data} />
           {match(mode)
             .with({ type: 'view' }, () => null)
             .otherwise((mode) => (
-              <Dialog
-                title={match(mode.type)
-                  .with('create', () => 'Add New Food')
-                  .with('update', () => 'Edit Food')
-                  .exhaustive()}
-                onClose={handleCancelClick}
-              >
-                <FoodForm
-                  mode={mode}
-                  routes={data.routes ?? []}
-                  types={data.types ?? []}
-                  flavors={data.flavors ?? []}
-                  temperatures={data.temperatures ?? []}
-                  actions={data.actions ?? []}
-                  onCancel={handleCancelClick}
-                  onSubmit={handleSaveClick}
-                />
+              <Dialog open onOpenChange={handleCancelClick}>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>
+                      {match(mode.type)
+                        .with('create', () => 'Add New Food')
+                        .with('update', () => 'Edit Food')
+                        .exhaustive()}
+                    </DialogTitle>
+                  </DialogHeader>
+                  <FoodForm
+                    mode={mode}
+                    data={data}
+                    onCancel={handleCancelClick}
+                    onSubmit={handleSaveClick}
+                  />
+                </DialogContent>
               </Dialog>
             ))}
 
@@ -191,17 +165,12 @@ export function AdminPage() {
                     { isError: false, isLoading: false, isSuccess: true },
                     ({ data: foods }) =>
                       foods.map((food) => (
-                        <React.Fragment key={food.id}>
-                          <FoodRow
-                            food={food}
-                            types={data.types}
-                            routes={data.routes}
-                            actions={data.actions}
-                            flavors={data.flavors}
-                            temperatures={data.temperatures}
-                            onEdit={handleRowEditClick}
-                          />
-                        </React.Fragment>
+                        <FoodRow
+                          food={food}
+                          data={data}
+                          onEdit={handleRowEditClick}
+                          key={food.id}
+                        />
                       ))
                   )
                   .otherwise(() => null)}
@@ -216,32 +185,25 @@ export function AdminPage() {
 
 function FoodRow({
   food,
-  routes,
-  actions,
-  flavors,
-  temperatures,
-  types,
+  data: { routes, actions, flavors, temperatures, types },
   onEdit,
 }: {
   food: Food;
-  routes: Route[] | undefined;
-  actions: Action[] | undefined;
-  flavors: Flavor[] | undefined;
-  temperatures: Temperature[] | undefined;
-  types: Type[] | undefined;
+  data: ReturnType<typeof useGetIngredients>['data'];
   onEdit: (food: Food) => void;
 }) {
   return (
     <tr key={food.id}>
       <td className="border p-2">{food.name}</td>
       <td className="border p-2">
-        {temperatures?.find((t) => t.id === food.temperature_id)?.name}
+        {getTemperatureNameById(temperatures)(food.temperature_id) ??
+          'undefined temperature'}
       </td>
       <td className="border p-2">
         {food.food_route_ids.map(getFoodRouteNameById(routes)).join(', ')}
       </td>
       <td className="border p-2">
-        {types?.find((t) => t.id === food.type_id)?.name}
+        {getFoodTypeNameById(types)(food.type_id) ?? 'undefined type'}
       </td>
       <td className="border p-2">
         {food.food_action_ids.map(getFoodActionNameById(actions)).join(', ')}
@@ -280,38 +242,5 @@ function ErrorTable({ error }: { error: string }) {
       </td>
       <td>{error}</td>
     </tr>
-  );
-}
-
-function Dialog({
-  title,
-  onClose,
-  children,
-}: {
-  title: React.ReactNode;
-  onClose: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="absolute inset-0 z-2 flex items-center justify-center bg-slate-500/50 ">
-      <dialog
-        open
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 inset-0 z-2 flex items-center justify-center bg-black bg-opacity-40 rounded-lg"
-      >
-        <div className="bg-white rounded-lg shadow-lg p-6 min-w-[450px] max-w-lg w-full relative flex flex-col gap-5">
-          <div className="flex">
-            <h2 className="text-xl">{title}</h2>
-            <button
-              className="text-gray-500 hover:text-gray-700 text-2xl ml-auto"
-              onClick={onClose}
-              aria-label="Close"
-            >
-              &times;
-            </button>
-          </div>
-          {children}
-        </div>
-      </dialog>
-    </div>
   );
 }

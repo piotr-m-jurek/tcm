@@ -57,7 +57,7 @@ export const getTemperatureOption = (temperature: Temperature | undefined) => ({
   value: temperature?.id.toString() ?? '-1',
 });
 
-const getFoodTypeName = (type: Type) => type.name;
+export const getFoodTypeName = (type: Type) => type.name;
 
 export const getFoodTypeNameById =
   (types: Type[] | undefined) => (type: Food['type_id']) => {

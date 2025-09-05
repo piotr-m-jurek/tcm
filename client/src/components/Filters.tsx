@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router';
-import type { Route, Flavor, Temperature, Type, Action } from '../lib/types';
 import { useState } from 'react';
+import type { useGetIngredients } from '@/lib/useGetIngredients';
 
 export const getFiltersObject = (params: URLSearchParams) => {
   const type = params.get('type') ?? undefined;
@@ -12,17 +12,9 @@ export const getFiltersObject = (params: URLSearchParams) => {
 };
 
 export const Filters = ({
-  types,
-  temperatures,
-  routes,
-  actions,
-  flavors,
+  data: { types, temperatures, routes, actions, flavors },
 }: {
-  types: Type[] | undefined;
-  temperatures: Temperature[] | undefined;
-  routes: Route[] | undefined;
-  actions: Action[] | undefined;
-  flavors: Flavor[] | undefined;
+  data: ReturnType<typeof useGetIngredients>['data'];
 }) => {
   const [params, setParams] = useSearchParams();
   const [open, setOpen] = useState(false);
