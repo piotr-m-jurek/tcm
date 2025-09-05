@@ -6,19 +6,28 @@ import { Layout } from '../components/Layout';
 import { fetchData } from '../lib/request';
 import { useGetIngredients } from '../lib/useGetIngredients';
 import { match, P } from 'ts-pattern';
+import { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogHeader,
+  DialogDescription,
+} from '@/components/ui/dialog';
+import {
+  getFoodActionNameById,
+  getFoodFlavorNameById,
+  getFoodRouteNameById,
+  getFoodTypeNameById,
+  getTemperatureNameById,
+} from '@/lib';
 
-const tableHeaders = [
-  'Name',
-  'Temperature',
-  'Routes',
-  'Type',
-  'Actions',
-  'Flavors',
-] as const;
+const tableHeaders = ['Name'] as const;
 
 export function App() {
   const [searchParams] = useSearchParams();
   const params = getFiltersObject(searchParams);
+  const [selectedFood, setSelectedFood] = useState<Food | null>(null);
 
   const ingredientsQuery = useGetIngredients();
 
@@ -70,15 +79,15 @@ export function App() {
                 </tr>
               </thead>
               <tbody>
-                {match([foodsQuery, ingredientsQuery])
-                  .with([{ isError: true }, { isError: true }], () => (
+                {match(foodsQuery)
+                  .with({ isError: true }, () => (
                     <tr>
                       <td colSpan={tableHeaders.length} className="border p-2">
                         Error loading foods
                       </td>
                     </tr>
                   ))
-                  .with([{ isLoading: true }, { isLoading: true }], () => (
+                  .with({ isLoading: true }, () => (
                     <tr>
                       <td colSpan={tableHeaders.length} className="border p-2">
                         <div className="flex flex-row w-full justify-center items-center">
@@ -88,44 +97,39 @@ export function App() {
                     </tr>
                   ))
                   .with(
-                    [
-                      { isLoading: false, isError: false, data: P.nonNullable },
-                      { isLoading: false, isError: false, data: P.nonNullable },
-                    ],
-                    ([{ data: food }, { data: data }]) =>
-                      food?.map((food) => (
-                        <tr key={food.id}>
+                    {
+                      isSuccess: true,
+                      isLoading: false,
+                      isError: false,
+                      data: P.nonNullable.select(),
+                    },
+                    (food) =>
+                      food.map((food) => (
+                        <tr key={food.id} onClick={() => setSelectedFood(food)}>
                           <td className="border p-2">{food.name}</td>
-                          <td className="border p-2">
-                            {data?.temperatures?.find(
-                              (t) => t.id === food.temperature_id
-                            )?.name ?? 'undefined temperature'}
-                          </td>
-                          <td className="border p-2">
-                            {food.food_route_ids
-                              .map(getRouteName(data?.routes))
-                              .join(', ')}
-                          </td>
-                          <td className="border p-2">
-                            {data?.types?.find((t) => t.id === food.type_id)
-                              ?.name ?? 'undefined type'}
-                          </td>
-                          <td className="border p-2">
-                            {food.food_action_ids
-                              .map(getActionName(data?.actions))
-                              .join(', ')}
-                          </td>
-                          <td className="border p-2">
-                            {food.food_flavor_ids
-                              .map(getFlavorName(data?.flavors))
-                              .join(', ')}
-                          </td>
                         </tr>
                       ))
                   )
                   .otherwise(() => null)}
               </tbody>
             </table>
+
+            <Dialog
+              open={selectedFood !== null}
+              onOpenChange={() => setSelectedFood(null)}
+            >
+              {selectedFood !== null && (
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>{selectedFood!.name}</DialogTitle>
+                  </DialogHeader>
+                  <FoodDetails
+                    food={selectedFood!}
+                    data={ingredientsQuery.data}
+                  />
+                </DialogContent>
+              )}
+            </Dialog>
           </div>
         </div>
       </div>
@@ -133,23 +137,38 @@ export function App() {
   );
 }
 
-function getFlavorName(flavors: Flavor[] | undefined) {
-  return (flavor_id: number) => {
-    const found = flavors?.find((f) => f.id === flavor_id);
-    return `${found?.name} (${found?.symbol})`;
-  };
+function FoodDetails({
+  food,
+  data,
+}: {
+  food: Food;
+  data: ReturnType<typeof useGetIngredients>['data'];
+}) {
+  return (
+    <div>
+      <div>{getFoodTypeNameById(data.types)(food.type_id)}</div>
+      <div>
+        {getTemperatureNameById(data.temperatures)(food.temperature_id)}
+      </div>
+
+      <div>
+        {food.food_route_ids.map(getFoodRouteNameById(data.routes)).join(', ')}
+      </div>
+
+      <div>
+        {food.food_action_ids
+          .map(getFoodActionNameById(data.actions))
+          .join(', ')}
+      </div>
+      <div>
+        {food.food_flavor_ids
+          .map(getFoodFlavorNameById(data.flavors))
+          .join(', ')}
+      </div>
+    </div>
+  );
 }
 
-function getActionName(actions: Action[] | undefined) {
-  return (action_id: number) => {
-    const found = actions?.find((a) => a.id === action_id);
-    return found?.name ?? 'undefined action';
-  };
-}
-
-function getRouteName(routes: Route[] | undefined) {
-  return (route_id: number) => {
-    const found = routes?.find((r) => r.id === route_id);
-    return found?.short_name ?? 'undefined route';
-  };
-}
+const loadingState = { isLoading: true };
+const errorState = { isError: true };
+const fetchedState = { isSuccess: true, isLoading: false, isError: false };
