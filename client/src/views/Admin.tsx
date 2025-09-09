@@ -144,7 +144,7 @@ export function AdminPage() {
 
           {/* Table */}
           <div className="overflow-x-auto">
-            <table className="w-full  ">
+            <table className="w-full">
               <thead>
                 <tr>
                   {tableHeaders.map((header) => (

@@ -14,14 +14,68 @@ import { createItem_v2, updateItem_v2 } from './db/writes';
 import { z } from 'zod';
 import { serveStatic } from 'hono/bun';
 import { logger } from 'hono/logger';
+import * as jwt from 'hono/jwt';
+import { assert } from './utils';
 
-const app = new Hono();
+type Variables = jwt.JwtVariables;
+const app = new Hono<{ Variables: Variables }>();
+
+const jwtToken = process.env.JWT;
+assert(jwtToken);
+const envEmail = process.env.ADMIN_EMAIL;
+assert(envEmail);
+const envPass = process.env.ADMIN_PASSWORD;
+assert(envPass);
 
 app.use('*', logger());
 app.use('*', serveStatic({ root: '../client/dist' }));
 app.use('/', serveStatic({ root: '../client/dist', path: '/index.html' }));
 
-app.use('*', cors());
+app.use(
+  '*',
+  cors({
+    origin: 'http://localhost:5173',
+    allowHeaders: ['Content-Type', 'Authorization'],
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
+    exposeHeaders: ['Content-Length'],
+    maxAge: 600,
+    credentials: true,
+  }) /* {
+    origin: 'http://localhost:5173', // your frontend origin
+    allowHeaders: ['Content-Type', 'Authorization'],
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
+    exposeHeaders: ['Content-Length'],
+    maxAge: 600, // cache preflight for 10 mins
+    credentials: true, // allow cookies / Authorization headers
+  } )*/
+);
+
+app.use('/api/*', jwt.jwt({ secret: jwtToken }));
+
+app.post('/login', async (c) => {
+  const body = await c.req.json();
+
+  const email = body.email;
+  const password = body.password;
+
+  console.log(email, envEmail);
+  console.log(password, envPass);
+
+  if (email === envEmail && password === btoa(envPass)) {
+    const token = await jwt.sign({ email }, jwtToken);
+    return c.json(
+      {
+        message: 'Login successfull',
+        email,
+        token,
+      },
+      200
+    );
+  }
+
+  return c.text('Invalid credentials', 400);
+});
+
 // =================
 // ===== API =====
 // =================

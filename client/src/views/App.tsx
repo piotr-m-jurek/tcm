@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router';
 import { Filters, getFiltersObject } from '../components/Filters';
-import type { Action, Flavor, Food, Route } from '../lib/types';
+import type { Food } from '../lib/types';
 import { Layout } from '../components/Layout';
 import { fetchData } from '../lib/request';
 import { useGetIngredients } from '../lib/useGetIngredients';
@@ -12,7 +12,6 @@ import {
   DialogContent,
   DialogTitle,
   DialogHeader,
-  DialogDescription,
 } from '@/components/ui/dialog';
 import {
   getFoodActionNameById,
@@ -46,7 +45,7 @@ export function App() {
 
   return (
     <Layout>
-      <div className="flex flex-col gap-4 flex-wrap bg-gray-100 min-h-screen">
+      <div className="flex flex-col gap-4 flex-wrap bg-gray-100 h-full overflow-y-auto">
         <div className="flex flex-col gap-4 flex-wrap max-w-screen-lg mx-auto p-4 bg-white rounded-lg shadow-md my-4 w-full">
           {match(ingredientsQuery)
             .with({ isError: true }, () => <div>Error loading ingredients</div>)
